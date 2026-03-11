@@ -1,0 +1,574 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candela González - Psicóloga Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1410;
+            --clay: #b5673a;
+            --linen: #f2ece3;
+            --parchment: #e8ddd0;
+            --warm-gray: #8a7d72;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--linen); color: var(--ink); }
+        .display { font-family: 'Cormorant Garamond', serif; }
+        /* Línea decorativa animada */
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 1px;
+            width: 0;
+            background: var(--clay);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+        /* Hero split */
+        .hero-image-panel {
+            background-color: var(--ink);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-image-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(181,103,58,0.18) 0%, rgba(26,20,16,0.6) 100%);
+            z-index: 1;
+        }
+        /* Bento grid */
+        .bento-tall { grid-row: span 2; }
+        /* Separador ornamental */
+        .ornament::before, .ornament::after {
+            content: '—';
+            color: var(--clay);
+            opacity: 0.6;
+            margin: 0 10px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        /* Hover card lift */
+        .card-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-lift:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(26,20,16,0.12); }
+        /* Número grande decorativo */
+        .big-num {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--clay);
+            opacity: 0.15;
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            font-weight: 300;
+        }
+        /* Booking resumen override */
+        #booking-resumen .text-stone-900 { color: var(--linen) !important; }
+        #booking-resumen .text-stone-700 { color: rgba(242,236,227,0.8) !important; }
+        #booking-resumen .text-stone-400 { color: rgba(242,236,227,0.35) !important; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR — barra mínima, sin fondo hasta scroll -->
+    <nav style="background-color: var(--linen); border-bottom: 1px solid var(--parchment);" class="sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Logo tipográfico -->
+            <a href="#inicio" class="flex items-center gap-3 group">
+                <div class="w-8 h-8 flex items-center justify-center" style="border: 1.5px solid var(--clay);">
+                    <span class="display font-semibold" style="color: var(--clay); font-size: 1rem;">C</span>
+                </div>
+                <div>
+                    <p class="display font-semibold text-sm" style="color: var(--ink); letter-spacing: 0.02em;">Candela González</p>
+                    <p class="text-xs uppercase tracking-widest" style="color: var(--warm-gray); font-size: 0.6rem;">Psicóloga</p>
+                </div>
+            </a>
+            <ul class="hidden md:flex gap-10 text-xs uppercase tracking-widest" style="color: var(--warm-gray);">
+                <li><a href="#inicio" class="nav-link hover:text-stone-900 transition-colors pb-0.5">Inicio</a></li>
+                <li><a href="#sobre-mi" class="nav-link hover:text-stone-900 transition-colors pb-0.5">Sobre mí</a></li>
+                <li><a href="#blog" class="nav-link hover:text-stone-900 transition-colors pb-0.5">Reflexiones</a></li>
+                <li><a href="#agendar" class="nav-link hover:text-stone-900 transition-colors pb-0.5" style="color: var(--clay);">Agendar</a></li>
+                <li><a href="#contacto" class="nav-link hover:text-stone-900 transition-colors pb-0.5">Contacto</a></li>
+            </ul>
+            <button class="md:hidden text-xl" style="color: var(--clay);">☰</button>
+        </div>
+    </nav>
+
+    <!-- HERO — split pantalla completa -->
+    <header id="inicio" class="min-h-screen grid md:grid-cols-2" style="min-height: calc(100vh - 57px);">
+
+        <!-- Panel izquierdo: imagen oscura con texto encima -->
+        <div class="hero-image-panel flex items-end p-10 md:p-16 min-h-80">
+            <img src="assets/images/Avatar.jpg"
+                 alt="Candela González"
+                 class="absolute inset-0 w-full h-full object-cover object-top"
+                 style="mix-blend-mode: normal; opacity: 0.55;"
+                 loading="eager">
+            <div class="relative z-10 space-y-3">
+                <p class="text-xs uppercase tracking-widest" style="color: var(--clay);" data-psico="hero_badge">Psicología · Bienestar</p>
+                <p class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.5);">MP: 15457</p>
+            </div>
+        </div>
+
+        <!-- Panel derecho: contenido en crudo -->
+        <div class="flex items-center px-10 md:px-16 py-16" style="background-color: var(--linen);">
+            <div class="max-w-sm space-y-8 w-full">
+                <!-- Nombre grande -->
+                <div>
+                    <p class="text-xs uppercase tracking-widest mb-4" style="color: var(--clay);">— Bienvenida —</p>
+                    <h1 class="display leading-none" style="font-size: clamp(3.5rem, 7vw, 5.5rem); font-weight: 300; color: var(--ink);">
+                        Candela<br><em style="font-weight: 600;">González</em>
+                    </h1>
+                </div>
+                <!-- Separador arcilla -->
+                <div style="height: 1px; width: 48px; background-color: var(--clay);"></div>
+                <p style="color: var(--warm-gray); line-height: 1.75; font-size: 0.95rem;" data-psico="hero_titulo">
+                    Acompañamiento integral para mujeres que buscan vivir con autenticidad, equilibrio y propósito.
+                </p>
+                <!-- Tags mínimos -->
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-xs uppercase tracking-widest px-3 py-1.5" style="border: 1px solid var(--clay); color: var(--clay);">Terapia Individual</span>
+                    <span class="text-xs uppercase tracking-widest px-3 py-1.5" style="border: 1px solid var(--parchment); color: var(--warm-gray);">Coaching</span>
+                    <span class="text-xs uppercase tracking-widest px-3 py-1.5" style="border: 1px solid var(--parchment); color: var(--warm-gray);">Bienestar</span>
+                </div>
+                <!-- CTAs -->
+                <div class="flex flex-col gap-3 pt-2">
+                    <a href="#agendar" class="text-center py-4 px-8 text-sm uppercase tracking-widest font-medium transition-all" style="background-color: var(--ink); color: var(--linen);"
+                       onmouseover="this.style.backgroundColor='var(--clay)'" onmouseout="this.style.backgroundColor='var(--ink)'">
+                        Agendar sesión
+                    </a>
+                    <a href="#sobre-mi" class="text-center py-4 px-8 text-sm uppercase tracking-widest transition-all" style="border: 1px solid var(--ink); color: var(--ink);"
+                       onmouseover="this.style.borderColor='var(--clay)';this.style.color='var(--clay)'" onmouseout="this.style.borderColor='var(--ink)';this.style.color='var(--ink)'">
+                        Conocer más
+                    </a>
+                </div>
+                <!-- Info footer -->
+                <div class="pt-4 space-y-1 text-xs" style="color: var(--warm-gray); border-top: 1px solid var(--parchment);">
+                    <p>📍 Río Cuarto, Córdoba · Online</p>
+                    <p>🕐 Lunes a Viernes, 9:00 – 19:00</p>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- SOBRE MÍ — layout cinematográfico horizontal -->
+    <section id="sobre-mi" style="background-color: var(--ink);" class="py-24 md:py-32">
+        <div class="max-w-6xl mx-auto px-6 md:px-10">
+
+            <!-- Encabezado de sección -->
+            <div class="flex items-center gap-6 mb-16">
+                <span class="display text-xs uppercase tracking-widest" style="color: var(--clay);">01</span>
+                <div style="height: 1px; flex: 1; background: rgba(242,236,227,0.1);"></div>
+                <h2 class="display text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.4);">Sobre mí</h2>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-12 items-start">
+                <!-- Imagen -->
+                <div class="md:col-span-5">
+                    <div class="relative" style="border: 1px solid rgba(181,103,58,0.3);">
+                        <img src="assets/images/about me.jpg"
+                             alt="Candela González - Sobre mí"
+                             class="w-full object-cover"
+                             style="height: 480px; object-position: center; filter: saturate(0.7) contrast(1.05);">
+                        <!-- Etiqueta esquina -->
+                        <div class="absolute bottom-0 left-0 px-4 py-2" style="background-color: var(--clay);">
+                            <p class="text-xs uppercase tracking-widest" style="color: var(--linen);">Psicóloga Clínica</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Texto -->
+                <div class="md:col-span-7 space-y-8 pt-4">
+                    <h3 class="display leading-tight" style="font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--linen); font-weight: 300;">
+                        Acompañando el<br><em style="color: var(--clay);">proceso</em> de cada mujer
+                    </h3>
+                    <p style="color: rgba(242,236,227,0.6); line-height: 1.8; font-size: 0.9rem;">
+                        Soy Candela González, Psicóloga especializada en acompañar a mujeres profesionales que enfrentan estrés, ansiedad y altos niveles de autoexigencia.
+                    </p>
+                    <p style="color: rgba(242,236,227,0.6); line-height: 1.8; font-size: 0.9rem;">
+                        Mi enfoque se centra en ayudarte a encontrar equilibrio entre tu vida profesional y personal, fomentando el bienestar integral.
+                    </p>
+                    <!-- Cita -->
+                    <blockquote class="display pl-5" style="border-left: 2px solid var(--clay); font-size: 1.15rem; color: var(--linen); font-style: italic; line-height: 1.7; font-weight: 300;" data-psico="sobre_mi_quote">
+                        "El verdadero éxito no es solo lograr metas profesionales, sino hacerlo de una manera que nos permita disfrutar del camino."
+                    </blockquote>
+                    <!-- Credenciales en fila -->
+                    <div class="grid grid-cols-1 gap-3 pt-4">
+                        <div class="flex items-center gap-4 py-3" style="border-bottom: 1px solid rgba(242,236,227,0.08);">
+                            <span style="color: var(--clay); font-size: 0.7rem;">✦</span>
+                            <span class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.5);">Licenciada en Psicología</span>
+                        </div>
+                        <div class="flex items-center gap-4 py-3" style="border-bottom: 1px solid rgba(242,236,227,0.08);">
+                            <span style="color: var(--clay); font-size: 0.7rem;">✦</span>
+                            <span class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.5);">Formación en Terapia Cognitivo-Conductual</span>
+                        </div>
+                        <div class="flex items-center gap-4 py-3">
+                            <span style="color: var(--clay); font-size: 0.7rem;">✦</span>
+                            <span class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.5);">Especialista en Coaching de Bienestar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG — bento grid asimétrico -->
+    <section id="blog" style="background-color: var(--parchment);" class="py-24 md:py-32">
+        <div class="max-w-6xl mx-auto px-6 md:px-10">
+
+            <div class="flex items-center gap-6 mb-16">
+                <span class="display text-xs uppercase tracking-widest" style="color: var(--clay);">02</span>
+                <div style="height: 1px; flex: 1; background: rgba(26,20,16,0.1);"></div>
+                <h2 class="display text-xs uppercase tracking-widest" style="color: var(--warm-gray);">Reflexiones & Blog</h2>
+            </div>
+
+            <!-- Bento: 3 columnas, fila 1 tiene una card grande + una pequeña, fila 2 tiene dos pequeñas -->
+            <div class="grid md:grid-cols-3 md:grid-rows-2 gap-4" style="min-height: 600px;" id="articulos-grid">
+
+                <!-- POST 1 — grande, ocupa col 1-2 y fila 1-2 -->
+                <article class="md:col-span-2 md:row-span-2 relative overflow-hidden cursor-pointer group card-lift"
+                         style="background: linear-gradient(160deg, #2e1e0e, #5a3820); min-height: 300px;">
+                    <div class="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity" style="background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"40\" height=\"40\"><circle cx=\"1\" cy=\"1\" r=\"1\" fill=\"%23c4a882\"/></svg>') repeat;"></div>
+                    <div class="relative z-10 h-full flex flex-col justify-end p-8 md:p-10">
+                        <p class="text-xs uppercase tracking-widest mb-4" style="color: var(--clay);">12 de Marzo, 2024</p>
+                        <h3 class="display mb-4 leading-tight" style="font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--linen); font-style: italic; font-weight: 300;">
+                            "Puedes ser libre y salvaje aunque nadie más lo sea"
+                        </h3>
+                        <p class="text-sm mb-6" style="color: rgba(242,236,227,0.55); line-height: 1.7; max-width: 480px;">
+                            Reflexión sobre la importancia de ser auténtica en el mundo profesional, sin temor al juzgamiento.
+                        </p>
+                        <span class="text-xs uppercase tracking-widest pb-0.5 inline-block w-fit transition-all group-hover:pr-4"
+                              style="color: var(--clay); border-bottom: 1px solid var(--clay);">Leer más →</span>
+                    </div>
+                </article>
+
+                <!-- POST 2 — pequeño, col 3, fila 1 -->
+                <article class="relative overflow-hidden cursor-pointer group card-lift"
+                         style="background-color: var(--ink); min-height: 140px;">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <p class="text-xs uppercase tracking-widest" style="color: var(--clay);">8 Mar 2024</p>
+                        <div>
+                            <h3 class="display text-lg mb-2 leading-snug" style="color: var(--linen); font-weight: 400;">
+                                Estrés vs Ansiedad
+                            </h3>
+                            <span class="text-xs uppercase tracking-widest pb-0.5 inline-block w-fit group-hover:pr-3 transition-all"
+                                  style="color: rgba(181,103,58,0.7); border-bottom: 1px solid rgba(181,103,58,0.4);">Leer →</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- POST 3 — pequeño, col 3, fila 2 -->
+                <article class="relative overflow-hidden cursor-pointer group card-lift"
+                         style="background-color: var(--clay); min-height: 140px;">
+                    <div class="p-6 h-full flex flex-col justify-between">
+                        <p class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.5);">1 Mar 2024</p>
+                        <div>
+                            <h3 class="display text-lg mb-2 leading-snug" style="color: var(--linen); font-weight: 400;">
+                                5 Técnicas de Mindfulness
+                            </h3>
+                            <span class="text-xs uppercase tracking-widest pb-0.5 inline-block w-fit group-hover:pr-3 transition-all"
+                                  style="color: rgba(242,236,227,0.8); border-bottom: 1px solid rgba(242,236,227,0.4);">Leer →</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- POST 4 — banner horizontal ancho -->
+            <article class="mt-4 relative overflow-hidden cursor-pointer group card-lift flex items-center gap-8 p-8"
+                     style="background-color: var(--linen); border: 1px solid rgba(26,20,16,0.12);">
+                <span class="big-num">04</span>
+                <div class="flex-1">
+                    <p class="text-xs uppercase tracking-widest mb-2" style="color: var(--warm-gray);">25 Feb 2024</p>
+                    <h3 class="display text-2xl" style="color: var(--ink); font-style: italic; font-weight: 300;">
+                        Autoexigencia: Tu Mayor Enemiga o Mejor Aliada
+                    </h3>
+                </div>
+                <p class="hidden md:block text-sm max-w-xs" style="color: var(--warm-gray); line-height: 1.7;">
+                    Descubre cómo transformar la autoexigencia en una herramienta de crecimiento personal.
+                </p>
+                <span class="shrink-0 text-xs uppercase tracking-widest pb-0.5 group-hover:pr-4 transition-all"
+                      style="color: var(--clay); border-bottom: 1px solid var(--clay);">Leer →</span>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- MI ENFOQUE — 3 cards minimalistas sobre fondo crudo -->
+    <section style="background-color: var(--linen);" class="py-24 md:py-32">
+        <div class="max-w-6xl mx-auto px-6 md:px-10">
+
+            <div class="flex items-center gap-6 mb-16">
+                <span class="display text-xs uppercase tracking-widest" style="color: var(--clay);">03</span>
+                <div style="height: 1px; flex: 1; background: rgba(26,20,16,0.1);"></div>
+                <h2 class="display text-xs uppercase tracking-widest" style="color: var(--warm-gray);">Mi Enfoque</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-px" style="background-color: var(--parchment);">
+
+                <div class="p-10 space-y-5 relative" style="background-color: var(--linen);">
+                    <span class="display text-6xl font-light" style="color: var(--clay); opacity: 0.2; line-height: 1;">I</span>
+                    <h3 class="display text-xl font-semibold" style="color: var(--ink);">Crecimiento Natural</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--warm-gray);">
+                        Acompañamiento que respeta tu ritmo y promueve el crecimiento desde adentro hacia afuera.
+                    </p>
+                </div>
+
+                <div class="p-10 space-y-5 relative" style="background-color: var(--linen);">
+                    <span class="display text-6xl font-light" style="color: var(--clay); opacity: 0.2; line-height: 1;">II</span>
+                    <h3 class="display text-xl font-semibold" style="color: var(--ink);">Bienestar Integral</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--warm-gray);">
+                        Trabajo sobre cuerpo, mente y emociones para un equilibrio duradero en tu vida.
+                    </p>
+                </div>
+
+                <div class="p-10 space-y-5 relative" style="background-color: var(--linen);">
+                    <span class="display text-6xl font-light" style="color: var(--clay); opacity: 0.2; line-height: 1;">III</span>
+                    <h3 class="display text-xl font-semibold" style="color: var(--ink);">Autenticidad</h3>
+                    <p class="text-sm leading-relaxed" style="color: var(--warm-gray);">
+                        Un espacio seguro donde puedes ser tú misma sin máscaras ni expectativas externas.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- AGENDAR SESIÓN — panel editorial oscuro -->
+    <section id="agendar" class="py-24 md:py-32" style="background-color: var(--ink);">
+        <div class="max-w-5xl mx-auto px-6 md:px-10">
+
+            <!-- Encabezado sección -->
+            <div class="flex items-center gap-6 mb-16">
+                <span class="display text-xs uppercase tracking-widest" style="color: var(--clay);">05</span>
+                <div style="height: 1px; flex: 1; background: rgba(242,236,227,0.1);"></div>
+                <h2 class="display text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.4);">Agenda tu sesión</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <!-- Info izquierda -->
+                <div class="space-y-8">
+                    <h3 class="display leading-tight" style="font-size: clamp(2rem, 3.5vw, 2.8rem); color: var(--linen); font-weight: 300;">
+                        Reservá tu<br><em style="color: var(--clay);">primer encuentro</em>
+                    </h3>
+                    <p style="color: rgba(242,236,227,0.6); line-height: 1.8; font-size: 0.9rem;">
+                        Completá el formulario con tus datos y el horario que preferís. Me pondré en contacto a la brevedad para confirmar.
+                    </p>
+                    <div style="height: 1px; background: rgba(181,103,58,0.3);"></div>
+                    <div class="space-y-4 text-sm" style="color: rgba(242,236,227,0.5);">
+                        <div class="flex items-center gap-3">
+                            <span style="color: var(--clay);">✦</span>
+                            <span>Sesiones presenciales y online disponibles</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span style="color: var(--clay);">✦</span>
+                            <span>Duración aproximada: 50 minutos</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span style="color: var(--clay);">✦</span>
+                            <span>Respuesta en menos de 24 horas</span>
+                        </div>
+                    </div>
+                    <!-- WhatsApp directo -->
+                    <a href="https://wa.me/543584397037?text=Hola%20Candela%2C%20quiero%20consultar%20sobre%20una%20sesi%C3%B3n"
+                       target="_blank" rel="noopener noreferrer"
+                       class="inline-flex items-center gap-3 px-6 py-3 text-sm uppercase tracking-widest transition-all"
+                       style="border: 1px solid rgba(181,103,58,0.4); color: var(--clay);"
+                       onmouseover="this.style.borderColor='var(--clay)';this.style.backgroundColor='rgba(181,103,58,0.1)'"
+                       onmouseout="this.style.borderColor='rgba(181,103,58,0.4)';this.style.backgroundColor='transparent'">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Escribir por WhatsApp
+                    </a>
+                </div>
+
+                <!-- Formulario derecha -->
+                <div>
+                    <div id="booking-form-view">
+                        <form id="booking-form" class="space-y-5">
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Nombre completo *</label>
+                                <input type="text" id="b-nombre" required
+                                    class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                    style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none;"
+                                    placeholder="Tu nombre"
+                                    onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(242,236,227,0.2)'">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Email *</label>
+                                <input type="email" id="b-email" required
+                                    class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                    style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none;"
+                                    placeholder="tu@email.com"
+                                    onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(242,236,227,0.2)'">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Teléfono (opcional)</label>
+                                <input type="tel" id="b-telefono"
+                                    class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                    style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none;"
+                                    placeholder="+54 358 ..."
+                                    onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(242,236,227,0.2)'">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Fecha *</label>
+                                    <input type="date" id="b-fecha" required
+                                        class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                        style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none; color-scheme: dark;"
+                                        onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(242,236,227,0.2)'">
+                                </div>
+                                <div>
+                                    <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Horario *</label>
+                                    <select id="b-hora" required
+                                        class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                        style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none; background-color: var(--ink);">
+                                        <option value="" style="background: var(--ink);">-- Elegí fecha --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Modalidad *</label>
+                                <select id="b-modalidad" required
+                                    class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                                    style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none; background-color: var(--ink);">
+                                    <option value="" style="background: var(--ink);">-- Seleccioná --</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-widest mb-2" style="color: var(--clay);">Motivo (opcional)</label>
+                                <textarea id="b-motivo" rows="3"
+                                    class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none resize-none"
+                                    style="border-bottom: 1px solid rgba(242,236,227,0.2); color: var(--linen); border-top: none; border-left: none; border-right: none;"
+                                    placeholder="Contame brevemente sobre qué quisiera trabajar..."
+                                    onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(242,236,227,0.2)'"></textarea>
+                            </div>
+
+                            <!-- Error -->
+                            <div id="booking-error" class="hidden text-sm px-4 py-3" style="background: rgba(220,38,38,0.15); color: #fca5a5; border: 1px solid rgba(220,38,38,0.3);"></div>
+
+                            <button type="submit"
+                                class="w-full py-4 text-xs uppercase tracking-widest font-medium transition-all mt-4"
+                                style="background-color: var(--clay); color: var(--linen);"
+                                onmouseover="this.style.backgroundColor='var(--linen)';this.style.color='var(--ink)'"
+                                onmouseout="this.style.backgroundColor='var(--clay)';this.style.color='var(--linen)'">
+                                Solicitar turno →
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- VISTA: CONFIRMACIÓN -->
+                    <div id="booking-success-view" class="hidden flex-col items-center text-center py-8">
+                        <div class="w-16 h-16 flex items-center justify-center text-3xl mb-6" style="border: 1px solid var(--clay); color: var(--clay);">✓</div>
+                        <h3 class="display text-2xl font-light mb-3" style="color: var(--linen);">¡Solicitud enviada!</h3>
+                        <p class="text-sm mb-8" style="color: rgba(242,236,227,0.5);">Te confirmaré la cita a la brevedad.</p>
+                        <div id="booking-resumen" class="w-full mb-8 p-6 text-left text-sm" style="border: 1px solid rgba(181,103,58,0.3); color: rgba(242,236,227,0.7); line-height: 1.8;"></div>
+                        <button onclick="resetBookingForm()"
+                            class="py-3 px-8 text-xs uppercase tracking-widest transition-all"
+                            style="border: 1px solid var(--clay); color: var(--clay);"
+                            onmouseover="this.style.backgroundColor='rgba(181,103,58,0.1)'" onmouseout="this.style.backgroundColor='transparent'">
+                            Hacer otra reserva
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/543584397037?text=Hola%20Candela%2C%20quiero%20consultar%20sobre%20una%20sesi%C3%B3n"
+       target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-50 flex items-center gap-3 pl-4 pr-5 py-3 shadow-2xl transition-all duration-300 hover:scale-105"
+       style="background-color: #25d366; color: white; border-radius: 9999px;"
+       onmouseover="this.style.backgroundColor='#22c55e'" onmouseout="this.style.backgroundColor='#25d366'">
+        <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="text-sm font-medium">WhatsApp</span>
+    </a>
+
+    <!-- CONTACTO — dos paneles: oscuro izquierda, claro derecha -->
+    <section id="contacto" class="grid md:grid-cols-2 min-h-screen" style="min-height: auto;">
+
+        <!-- Panel oscuro: info -->
+        <div class="py-24 px-10 md:px-16 flex flex-col justify-center" style="background-color: var(--ink);">
+            <div class="max-w-sm space-y-10">
+                <div>
+                    <span class="display text-xs uppercase tracking-widest" style="color: var(--clay);">04 — Contacto</span>
+                    <h2 class="display mt-4 leading-tight" style="font-size: clamp(2rem, 3.5vw, 3rem); color: var(--linen); font-weight: 300;">
+                        Empecemos<br><em style="color: var(--clay);">juntas</em>
+                    </h2>
+                </div>
+                <div style="height: 1px; background: rgba(181,103,58,0.3);"></div>
+                <div class="space-y-6 text-sm" style="color: rgba(242,236,227,0.5);">
+                    <div>
+                        <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--clay);">Email</p>
+                        <a href="mailto:candela@example.com" class="hover:text-amber-300 transition-colors" style="color: rgba(242,236,227,0.7);">candela@example.com</a>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--clay);">WhatsApp</p>
+                        <a href="https://wa.me/5493544123456" class="hover:text-amber-300 transition-colors" style="color: rgba(242,236,227,0.7);">+54 9 3544 123456</a>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--clay);">Ubicación</p>
+                        <p style="color: rgba(242,236,227,0.7);">Río Cuarto, Córdoba · Online</p>
+                    </div>
+                    <div>
+                        <p class="text-xs uppercase tracking-widest mb-1" style="color: var(--clay);">Horarios</p>
+                        <p style="color: rgba(242,236,227,0.7);">Lun – Vie, 9:00 – 19:00</p>
+                    </div>
+                </div>
+                <!-- Redes -->
+                <div class="flex gap-5 pt-2">
+                    <a href="#" class="text-xs uppercase tracking-widest transition-colors hover:text-amber-300" style="color: rgba(242,236,227,0.3);">Instagram</a>
+                    <a href="#" class="text-xs uppercase tracking-widest transition-colors hover:text-amber-300" style="color: rgba(242,236,227,0.3);">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel claro: formulario -->
+        <div class="py-24 px-10 md:px-16 flex flex-col justify-center" style="background-color: var(--parchment);">
+            <div class="max-w-sm w-full space-y-5">
+                <p class="text-xs uppercase tracking-widest mb-8" style="color: var(--warm-gray);">Enviame un mensaje</p>
+                <input type="text" placeholder="Nombre" 
+                       class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                       style="border-bottom: 1px solid rgba(26,20,16,0.25); color: var(--ink); border-top: none; border-left: none; border-right: none;"
+                       onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(26,20,16,0.25)'">
+                <input type="email" placeholder="Email"
+                       class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none"
+                       style="border-bottom: 1px solid rgba(26,20,16,0.25); color: var(--ink); border-top: none; border-left: none; border-right: none;"
+                       onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(26,20,16,0.25)'">
+                <textarea placeholder="Mensaje" rows="5"
+                          class="w-full py-3.5 px-0 text-sm bg-transparent focus:outline-none resize-none"
+                          style="border-bottom: 1px solid rgba(26,20,16,0.25); color: var(--ink); border-top: none; border-left: none; border-right: none;"
+                          onfocus="this.style.borderBottomColor='var(--clay)'" onblur="this.style.borderBottomColor='rgba(26,20,16,0.25)'"></textarea>
+                <button type="submit" 
+                        class="w-full py-4 text-xs uppercase tracking-widest font-medium transition-all mt-4"
+                        style="background-color: var(--ink); color: var(--linen);"
+                        onmouseover="this.style.backgroundColor='var(--clay)'" onmouseout="this.style.backgroundColor='var(--ink)'">
+                    Enviar mensaje
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- FOOTER — minimalista, una línea -->
+    <footer class="py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4" style="background-color: var(--ink); border-top: 1px solid rgba(181,103,58,0.2);">
+        <p class="display text-xs italic" style="color: rgba(242,236,227,0.35);">Candela González — Psicóloga</p>
+        <p class="text-xs uppercase tracking-widest" style="color: rgba(242,236,227,0.2);">© 2024 · Teamplates Psico</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="site-loader.js"></script>
+    <script src="booking.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+-- =============================================
+-- ESQUEMA DE BASE DE DATOS - RESERVADO PARA FUTURO
+-- =============================================
+-- Este archivo contiene la estructura de base de datos
+-- preparada para cuando se integre el backend completo.
+--
+-- Por el momento, el proyecto se mantiene enfocado en Frontend.
+-- Las tablas aquí definidas están listas para implementación
+-- cuando se requiera integración con backend.
+--
+-- TABLAS PLANEADAS:
+-- - users (Usuarios registrados)
+-- - portfolios (Portfolios de psicólogas)
+-- - portfolio_sections (Secciones de cada portfolio)
+-- - portfolio_works (Casos/trabajos del portfolio)
+-- - services (Servicios ofrecidos)
+-- - testimonials (Testimonios de clientes)
+-- - contact_messages (Mensajes de contacto)
+-- - subscriptions (Planes de suscripción)
+-- - audit_logs (Logs de auditoría y seguridad)
+--
+-- INSTRUCCIONES PARA IMPLEMENTAR CUANDO SEA NECESARIO:
+-- 1. Descomenta las tablas cuando estés listo para backend
+-- 2. Ajusta los tipos de datos según tu BD (PostgreSQL, MySQL, etc)
+-- 3. Ejecuta: psql -U postgres -d teamplates_psico -f schema.sql
+--
+-- =============================================

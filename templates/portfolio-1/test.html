@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Suite — Psico Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Courier New', monospace; background: #0f172a; color: #e2e8f0; }
+        .pass  { color: #4ade80; }
+        .fail  { color: #f87171; }
+        .warn  { color: #fbbf24; }
+        .info  { color: #60a5fa; }
+        .dim   { color: #64748b; }
+        .suite-header { color: #c084fc; font-weight: bold; font-size: 1.05rem; }
+        .log-line { padding: 1px 0; }
+        .summary-pass { background: #14532d; border: 1px solid #4ade80; }
+        .summary-fail { background: #450a0a; border: 1px solid #f87171; }
+        pre { white-space: pre-wrap; word-break: break-all; }
+        .spinner { animation: spin 1s linear infinite; display: inline-block; }
+        @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+    </style>
+</head>
+<body class="p-6 min-h-screen">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- HEADER -->
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-white mb-1">🧪 Test Suite — Psico Portfolio</h1>
+            <p class="text-slate-400 text-sm">Pruebas automáticas para <code class="text-purple-400">data.js</code>, lógica de agenda, citas, validaciones y almacenamiento.</p>
+            <div class="mt-3 flex gap-3">
+                <button onclick="runAllTests()" id="btn-run"
+                    class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg text-sm font-semibold transition-all">
+                    ▶ Ejecutar todos los tests
+                </button>
+                <button onclick="clearOutput()"
+                    class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-5 py-2 rounded-lg text-sm font-semibold transition-all">
+                    🗑 Limpiar
+                </button>
+                <button onclick="exportLog()"
+                    class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-5 py-2 rounded-lg text-sm font-semibold transition-all">
+                    📋 Copiar log
+                </button>
+            </div>
+        </div>
+
+        <!-- RESUMEN -->
+        <div id="summary" class="hidden rounded-xl p-4 mb-6 text-sm font-semibold"></div>
+
+        <!-- OUTPUT -->
+        <div class="bg-slate-900 rounded-xl border border-slate-700 p-5 min-h-48">
+            <div id="output" class="text-sm leading-relaxed space-y-0.5">
+                <p class="dim">Presioná "Ejecutar todos los tests" para comenzar.</p>
+            </div>
+        </div>
+
+        <!-- COBERTURA -->
+        <div id="coverage" class="hidden mt-6 bg-slate-800 rounded-xl border border-slate-700 p-5">
+            <h2 class="text-white font-semibold mb-4">📊 Cobertura de funciones</h2>
+            <div id="coverage-list" class="grid grid-cols-2 md:grid-cols-3 gap-2 text-xs"></div>
+        </div>
+    </div>
+
+    <!-- Cargar data.js para tener las funciones reales disponibles -->
+    <script src="data.js"></script>
+
+    <script>
+    // ============================================================
+    // FRAMEWORK DE TESTING MÍNIMO
+    // ============================================================
+
+    let passed = 0, failed = 0, warned = 0;
+    const logLines = [];
+    const coveredFns = new Set();
+    const allFns = ['getDB','saveDB','resetDB','getAgenda','saveAgenda','getCitas','saveCitas',
+                    'crearCita','actualizarEstadoCita','eliminarCita','getHorariosDisponibles',
+                    'fechaTieneDisponibilidad','formatFecha'];
+
+    function log(msg, type = 'dim') {
+        logLines.push({ msg, type });
+        const el = document.createElement('p');
+        el.className = `log-line ${type}`;
+        el.innerHTML = msg;
+        document.getElementById('output').appendChild(el);
+        // Auto scroll
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function suite(name) {
+        log('');
+        log(`━━━ ${name} ━━━`, 'suite-header');
+    }
+
+    function assert(description, condition, detail = '') {
+        if (condition) {
+            passed++;
+            log(`  ✅ ${description}${detail ? ' <span class="dim">(' + detail + ')</span>' : ''}`, 'pass');
+        } else {
+            failed++;
+            log(`  ❌ ${description}${detail ? ' <span class="fail">→ ' + detail + '</span>' : ''}`, 'fail');
+        }
+        return condition;
+    }
+
+    function assertThrows(description, fn) {
+        try {
+            fn();
+            failed++;
+            log(`  ❌ ${description} — Debería haber lanzado error`, 'fail');
+            return false;
+        } catch(e) {
+            passed++;
+            log(`  ✅ ${description} <span class="dim">(error esperado: ${e.message || e})</span>`, 'pass');
+            return true;
+        }
+    }
+
+    function warn(msg) {
+        warned++;
+        log(`  ⚠️  ${msg}`, 'warn');
+    }
+
+    function info(msg) {
+        log(`  ℹ️  ${msg}`, 'info');
+    }
+
+    function track(fnName) {
+        coveredFns.add(fnName);
+    }
+
+    // Limpia las claves del localStorage usadas por los tests
+    function cleanLS() {
+        localStorage.removeItem('psico_portfolio_data');
+        localStorage.removeItem('psico_citas');
+        localStorage.removeItem('psico_agenda');
+        // También claves de test temporal
+        localStorage.removeItem('__psico_test_key__');
+    }
+
+    function clearOutput() {
+        document.getElementById('output').innerHTML = '<p class="dim">Presioná "Ejecutar todos los tests" para comenzar.</p>';
+        document.getElementById('summary').classList.add('hidden');
+        document.getElementById('coverage').classList.add('hidden');
+        logLines.length = 0;
+        passed = 0; failed = 0; warned = 0;
+        coveredFns.clear();
+    }
+
+    function exportLog() {
+        const text = logLines.map(l => l.msg.replace(/<[^>]*>/g,'')).join('\n');
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.querySelector('[onclick="exportLog()"]');
+            btn.textContent = '✓ Copiado!';
+            setTimeout(() => btn.textContent = '📋 Copiar log', 2000);
+        });
+    }
+
+    // ============================================================
+    // HELPER: próximo lunes/martes/etc desde hoy
+    // ============================================================
+    function nextWeekday(targetDow) {
+        // targetDow: 0=Dom,1=Lun,2=Mar,...
+        const d = new Date();
+        d.setHours(12,0,0,0);
+        const diff = (targetDow - d.getDay() + 7) % 7 || 7;
+        d.setDate(d.getDate() + diff);
+        return d.toISOString().split('T')[0];
+    }
+
+    function nextWeekend(targetDow) {
+        // Fines de semana (6=Sáb, 0=Dom)
+        return nextWeekday(targetDow);
+    }
+
+    // ============================================================
+    // SUITES DE TEST
+    // ============================================================
+
+    function testLocalStorage() {
+        suite('1. localStorage — disponibilidad y acceso');
+        track('saveDB'); track('getDB');
+
+        assert('localStorage está disponible en este browser',
+            typeof localStorage !== 'undefined');
+
+        const testKey = '__psico_test_key__';
+        localStorage.setItem(testKey, 'ok');
+        assert('Se puede escribir y leer en localStorage',
+            localStorage.getItem(testKey) === 'ok');
+        localStorage.removeItem(testKey);
+
+        assert('Leer clave inexistente devuelve null',
+            localStorage.getItem('__inexistente_xyz__') === null);
+
+        // Estimar cuota disponible
+        try {
+            let size = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) size += localStorage[key].length * 2;
+            }
+            const kb = (size / 1024).toFixed(1);
+            info(`Uso actual de localStorage: ~${kb} KB`);
+        } catch(e) {}
+    }
+
+    function testGetDB() {
+        suite('2. getDB() / saveDB() / resetDB() — base de datos de contenido');
+        track('getDB'); track('saveDB'); track('resetDB');
+
+        cleanLS();
+
+        // Sin localStorage → defaults
+        const db = getDB();
+        assert('getDB() sin localStorage devuelve objeto válido',
+            db && typeof db === 'object');
+        assert('Tiene array de artículos por defecto',
+            Array.isArray(db.articulos) && db.articulos.length > 0,
+            `${db.articulos?.length} artículos`);
+        assert('Tiene objeto de frases por defecto',
+            db.frases && typeof db.frases === 'object');
+        assert('Frases incluyen hero_badge',
+            typeof db.frases.hero_badge === 'string' && db.frases.hero_badge.length > 0);
+        assert('Frases incluyen hero_titulo',
+            typeof db.frases.hero_titulo === 'string');
+        assert('Frases incluyen sobre_mi_quote',
+            typeof db.frases.sobre_mi_quote === 'string');
+        assert('Frases incluyen blog_subtitulo',
+            typeof db.frases.blog_subtitulo === 'string');
+        assert('Frases incluyen enfoque_subtitulo',
+            typeof db.frases.enfoque_subtitulo === 'string');
+
+        // Estructura de un artículo
+        const art = db.articulos[0];
+        assert('Artículo tiene id',              typeof art.id === 'number');
+        assert('Artículo tiene emoji',            typeof art.emoji === 'string');
+        assert('Artículo tiene titulo',           typeof art.titulo === 'string' && art.titulo.length > 0);
+        assert('Artículo tiene descripcion',      typeof art.descripcion === 'string');
+        assert('Artículo tiene fecha',            typeof art.fecha === 'string');
+        assert('Artículo tiene color_desde',      typeof art.color_desde === 'string');
+        assert('Artículo tiene tag1 y tag2',      typeof art.tag1 === 'string' && typeof art.tag2 === 'string');
+
+        // saveDB
+        db.frases.hero_badge = 'TEST BADGE';
+        const saved = saveDB(db);
+        assert('saveDB() retorna true',           saved === true);
+
+        const db2 = getDB();
+        assert('getDB() lee el valor guardado',   db2.frases.hero_badge === 'TEST BADGE');
+
+        // resetDB
+        const dbReset = resetDB();
+        assert('resetDB() retorna objeto con defaults', dbReset.frases.hero_badge !== 'TEST BADGE');
+        const db3 = getDB();
+        assert('Después de resetDB(), getDB() vuelve a defaults',
+            db3.frases.hero_badge !== 'TEST BADGE');
+    }
+
+    function testAgenda() {
+        suite('3. getAgenda() / saveAgenda() — configuración de disponibilidad');
+        track('getAgenda'); track('saveAgenda');
+
+        cleanLS();
+
+        const agenda = getAgenda();
+        assert('getAgenda() devuelve objeto',              typeof agenda === 'object');
+        assert('Tiene propiedad dias',                     typeof agenda.dias === 'object');
+        assert('Tiene 7 entradas de días (0-6)',           Object.keys(agenda.dias).length === 7);
+        assert('Lunes está activo por defecto',            agenda.dias['1'].activo === true);
+        assert('Sábado está inactivo por defecto',         agenda.dias['6'].activo === false);
+        assert('Domingo está inactivo por defecto',        agenda.dias['0'].activo === false);
+        assert('Lunes tiene horarios',                     Array.isArray(agenda.dias['1'].horarios) && agenda.dias['1'].horarios.length > 0);
+        assert('Tiene array bloqueadas',                   Array.isArray(agenda.bloqueadas));
+        assert('Tiene objeto extras',                      typeof agenda.extras === 'object');
+        assert('Tiene array modalidades',                  Array.isArray(agenda.modalidades) && agenda.modalidades.length > 0);
+        assert('Tiene duracion numérica',                  typeof agenda.duracion === 'number');
+        assert('Labels de días son correctos',
+            agenda.dias['1'].label === 'Lunes' && agenda.dias['5'].label === 'Viernes');
+
+        // Horarios son strings HH:MM
+        const hs = agenda.dias['1'].horarios;
+        const validFormat = hs.every(h => /^\d{2}:\d{2}$/.test(h));
+        assert('Todos los horarios tienen formato HH:MM',  validFormat, `muestra: ${hs[0]}`);
+
+        // saveAgenda
+        agenda.duracion = 60;
+        const ok = saveAgenda(agenda);
+        assert('saveAgenda() retorna true',               ok === true);
+        const a2 = getAgenda();
+        assert('getAgenda() lee cambio guardado',          a2.duracion === 60);
+    }
+
+    function testHorariosDisponibles() {
+        suite('4. getHorariosDisponibles() — cálculo de slots libres');
+        track('getHorariosDisponibles'); track('fechaTieneDisponibilidad');
+
+        cleanLS();
+
+        const lunes = nextWeekday(1);   // próximo lunes
+        const sabado = nextWeekend(6);  // próximo sábado
+
+        info(`Fecha de prueba (Lunes): ${lunes}`);
+        info(`Fecha de prueba (Sábado): ${sabado}`);
+
+        const horariosLunes = getHorariosDisponibles(lunes);
+        assert('Lunes activo tiene horarios disponibles',
+            horariosLunes.length > 0, `${horariosLunes.length} slots`);
+        assert('Horarios están ordenados',
+            JSON.stringify(horariosLunes) === JSON.stringify([...horariosLunes].sort()));
+
+        const horariosSabado = getHorariosDisponibles(sabado);
+        assert('Sábado inactivo devuelve array vacío',
+            horariosSabado.length === 0);
+
+        // Fecha bloqueada
+        const agenda = getAgenda();
+        agenda.bloqueadas.push(lunes);
+        saveAgenda(agenda);
+        const tras_bloqueo = getHorariosDisponibles(lunes);
+        assert('Fecha bloqueada devuelve array vacío',
+            tras_bloqueo.length === 0);
+
+        // Restaurar
+        agenda.bloqueadas = agenda.bloqueadas.filter(d => d !== lunes);
+        saveAgenda(agenda);
+
+        // Extras
+        const extraHora = '07:00';
+        if (!agenda.extras[lunes]) agenda.extras[lunes] = [];
+        agenda.extras[lunes].push(extraHora);
+        saveAgenda(agenda);
+        const conExtras = getHorariosDisponibles(lunes);
+        assert('Horario extra aparece en disponibles',
+            conExtras.includes(extraHora), extraHora);
+
+        // Restaurar extras
+        delete agenda.extras[lunes];
+        saveAgenda(agenda);
+
+        // fechaTieneDisponibilidad
+        assert('fechaTieneDisponibilidad() retorna true para lunes',
+            fechaTieneDisponibilidad(lunes) === true);
+        assert('fechaTieneDisponibilidad() retorna false para sábado',
+            fechaTieneDisponibilidad(sabado) === false);
+    }
+
+    function testCitas() {
+        suite('5. crearCita() / getCitas() / actualizarEstadoCita() / eliminarCita()');
+        track('crearCita'); track('getCitas'); track('saveCitas');
+        track('actualizarEstadoCita'); track('eliminarCita');
+
+        cleanLS();
+
+        const lunes = nextWeekday(1);
+
+        // Sin citas
+        const empty = getCitas();
+        assert('getCitas() sin datos devuelve array vacío',   Array.isArray(empty) && empty.length === 0);
+
+        // Crear cita
+        const cita1 = crearCita({
+            nombre: 'Ana García',
+            email: 'ana@test.com',
+            telefono: '+54 9 358 000 0001',
+            fecha: lunes,
+            hora: '09:00',
+            modalidad: 'Presencial',
+            motivo: 'Test motivo'
+        });
+
+        assert('crearCita() retorna objeto con id',          typeof cita1.id === 'number');
+        assert('Cita tiene estado "pendiente" por defecto',  cita1.estado === 'pendiente');
+        assert('Cita tiene nombre correcto',                 cita1.nombre === 'Ana García');
+        assert('Cita tiene email correcto',                  cita1.email === 'ana@test.com');
+        assert('Cita tiene fecha correcta',                  cita1.fecha === lunes);
+        assert('Cita tiene hora correcta',                   cita1.hora === '09:00');
+        assert('Cita tiene modalidad correcta',              cita1.modalidad === 'Presencial');
+        assert('Cita tiene motivo correcto',                 cita1.motivo === 'Test motivo');
+        assert('Cita tiene creadaEn ISO string',             typeof cita1.creadaEn === 'string' && cita1.creadaEn.includes('T'));
+        assert('IDs son numéricos únicos (base timestamp)',  cita1.id > 0);
+
+        // getCitas refleja la nueva cita
+        const citas = getCitas();
+        assert('getCitas() refleja la cita creada',          citas.length === 1);
+        assert('Cita en storage tiene todos los campos',
+            citas[0].nombre === 'Ana García' && citas[0].estado === 'pendiente');
+
+        // Crear segunda cita
+        await_ms(3); // garantiza ID distinto (Date.now())
+        const cita2 = crearCita({
+            nombre: 'María López',
+            email: 'maria@test.com',
+            fecha: lunes,
+            hora: '10:00',
+            modalidad: 'Online (videollamada)',
+            motivo: ''
+        });
+        assert('Segunda cita creada con ID diferente',       cita2.id !== cita1.id);
+        assert('Ahora hay 2 citas en storage',               getCitas().length === 2);
+        assert('Telefono vacío queda como string vacío',     cita2.telefono === '');
+
+        // actualizarEstadoCita
+        const ok = actualizarEstadoCita(cita1.id, 'confirmada');
+        assert('actualizarEstadoCita() retorna true',        ok === true);
+        const updated = getCitas().find(c => c.id === cita1.id);
+        assert('Estado actualizado a "confirmada"',          updated.estado === 'confirmada');
+
+        const ok2 = actualizarEstadoCita(cita1.id, 'cancelada');
+        assert('Puede cambiar a "cancelada"',                ok2 === true);
+        const updated2 = getCitas().find(c => c.id === cita1.id);
+        assert('Estado actualizado a "cancelada"',           updated2.estado === 'cancelada');
+
+        const noExiste = actualizarEstadoCita(999999, 'confirmada');
+        assert('actualizarEstadoCita() con ID inválido retorna false', noExiste === false);
+
+        // eliminarCita
+        eliminarCita(cita1.id);
+        const tras_eliminar = getCitas();
+        assert('Después de eliminar queda 1 cita',           tras_eliminar.length === 1);
+        assert('La cita eliminada no existe más',            !tras_eliminar.find(c => c.id === cita1.id));
+
+        eliminarCita(cita2.id);
+        assert('Después de eliminar ambas, array vacío',     getCitas().length === 0);
+
+        // Eliminar ID inexistente no rompe
+        eliminarCita(999999);
+        assert('Eliminar ID inexistente no lanza error',     true);
+    }
+
+    function testHorariosConCitas() {
+        suite('6. Disponibilidad se descuenta correctamente con citas existentes');
+        track('getHorariosDisponibles');
+
+        cleanLS();
+
+        const lunes = nextWeekday(1);
+        const agenda = getAgenda();
+        // Asegurar que lunes tiene 09:00
+        if (!agenda.dias['1'].horarios.includes('09:00')) {
+            agenda.dias['1'].horarios.push('09:00');
+            saveAgenda(agenda);
+        }
+
+        const antesDeReservar = getHorariosDisponibles(lunes);
+        const cantidadInicial = antesDeReservar.length;
+        assert('Hay horarios disponibles antes de reservar', cantidadInicial > 0, `${cantidadInicial} slots`);
+        assert('09:00 está disponible antes de reservar',    antesDeReservar.includes('09:00'));
+
+        // Crear cita pendiente en 09:00
+        const c = crearCita({ nombre:'Test', email:'t@t.com', fecha: lunes, hora:'09:00', modalidad:'Online (videollamada)' });
+        const despuesPendiente = getHorariosDisponibles(lunes);
+        assert('09:00 desaparece cuando hay cita pendiente',
+            !despuesPendiente.includes('09:00'));
+        assert('La cantidad de slots disminuyó en 1',
+            despuesPendiente.length === cantidadInicial - 1);
+
+        // Confirmar → sigue bloqueado
+        actualizarEstadoCita(c.id, 'confirmada');
+        const despuesConfirmar = getHorariosDisponibles(lunes);
+        assert('09:00 sigue bloqueado tras confirmar',       !despuesConfirmar.includes('09:00'));
+
+        // Cancelar → se libera
+        actualizarEstadoCita(c.id, 'cancelada');
+        const despuesCancelar = getHorariosDisponibles(lunes);
+        assert('09:00 se libera cuando la cita se cancela',  despuesCancelar.includes('09:00'));
+
+        // Eliminar → disponible nuevamente
+        actualizarEstadoCita(c.id, 'pendiente');
+        eliminarCita(c.id);
+        const despuesEliminar = getHorariosDisponibles(lunes);
+        assert('09:00 disponible tras eliminar la cita',     despuesEliminar.includes('09:00'));
+        assert('Cantidad de slots volvió al valor inicial',  despuesEliminar.length === cantidadInicial);
+    }
+
+    function testFormatFecha() {
+        suite('7. formatFecha() — formato de fechas');
+        track('formatFecha');
+
+        // 2026-03-09 es Lunes
+        const r1 = formatFecha('2026-03-09');
+        assert('2026-03-09 → contiene "Lunes"',              r1.includes('Lunes'), r1);
+        assert('2026-03-09 → contiene "9"',                  r1.includes('9'), r1);
+        assert('2026-03-09 → contiene "Marzo"',              r1.includes('Marzo'), r1);
+        assert('2026-03-09 → contiene "2026"',               r1.includes('2026'), r1);
+
+        // 2026-01-01 es Jueves
+        const r2 = formatFecha('2026-01-01');
+        assert('2026-01-01 → contiene "Enero"',              r2.includes('Enero'), r2);
+
+        // 2026-12-25 es Viernes
+        const r3 = formatFecha('2026-12-25');
+        assert('2026-12-25 → contiene "Diciembre"',          r3.includes('Diciembre'), r3);
+        assert('2026-12-25 → contiene "25"',                 r3.includes('25'), r3);
+
+        // No es vacío
+        assert('formatFecha() no devuelve string vacío',     formatFecha('2026-06-15').length > 5);
+    }
+
+    function testCitaManual() {
+        suite('8. Cita manual — campo "origen" y detección de conflicto');
+        track('crearCita'); track('getCitas');
+
+        cleanLS();
+
+        const lunes = nextWeekday(1);
+
+        // Simular lo que hace agregarCitaManual()
+        const citas = getCitas();
+        const nueva = {
+            id: Date.now(),
+            nombre: 'Pedro Sánchez',
+            email: '(sin email)',
+            telefono: '+54 9 358 111 2222',
+            fecha: lunes,
+            hora: '11:00',
+            modalidad: 'Presencial',
+            motivo: 'Turno por teléfono',
+            estado: 'confirmada',
+            origen: 'manual',
+            creadaEn: new Date().toISOString()
+        };
+        citas.push(nueva);
+        saveCitas(citas);
+
+        const saved = getCitas();
+        const manual = saved.find(c => c.origen === 'manual');
+        assert('Cita manual se guarda con origen="manual"',  manual !== undefined);
+        assert('Cita manual tiene estado "confirmada"',      manual?.estado === 'confirmada');
+        assert('Cita manual bloquea ese horario',
+            !getHorariosDisponibles(lunes).includes('11:00'));
+
+        // Detección de conflicto (lógica que usa agregarCitaManual)
+        const conflicto = getCitas().find(c =>
+            c.fecha === lunes && c.hora === '11:00' &&
+            (c.estado === 'pendiente' || c.estado === 'confirmada')
+        );
+        assert('Detección de conflicto funciona para 11:00 el lunes', conflicto !== undefined);
+
+        // Sin conflicto en otro horario
+        const sinConflicto = getCitas().find(c =>
+            c.fecha === lunes && c.hora === '15:00' &&
+            (c.estado === 'pendiente' || c.estado === 'confirmada')
+        );
+        assert('No hay conflicto para 15:00 (horario libre)', sinConflicto === undefined);
+    }
+
+    function testAgendaExtras() {
+        suite('9. Agenda — extras, bloqueos y modalidades');
+        track('getAgenda'); track('saveAgenda');
+
+        cleanLS();
+
+        const sabado = nextWeekend(6);
+        info(`Sábado de prueba: ${sabado}`);
+
+        // Sábado normalmente sin disponibilidad
+        assert('Sábado sin extra tiene 0 horarios', getHorariosDisponibles(sabado).length === 0);
+
+        // Agregar horario extra en sábado
+        const agenda = getAgenda();
+        agenda.extras[sabado] = ['10:00', '11:00'];
+        // Activar sábado temporalmente NO se necesita — extras funcionan solos sólo si el día está activo
+        // Según el código: diaConfig.activo debe ser true. Probemos el caso correcto:
+        agenda.dias['6'].activo = true;
+        agenda.dias['6'].horarios = [];
+        saveAgenda(agenda);
+
+        const conExtras = getHorariosDisponibles(sabado);
+        assert('Extra en sábado (activado) aparece en disponibles',
+            conExtras.includes('10:00') && conExtras.includes('11:00'), conExtras.join(', '));
+        assert('Solo los extras (sin horarios base)',             conExtras.length === 2);
+
+        // Desactivar sábado → extras ya no valen
+        const agenda2 = getAgenda();
+        agenda2.dias['6'].activo = false;
+        saveAgenda(agenda2);
+        assert('Con día inactivo los extras no aparecen',        getHorariosDisponibles(sabado).length === 0);
+
+        // Bloquear fecha activa
+        const lunes = nextWeekday(1);
+        const agenda3 = getAgenda();
+        assert('Lunes tiene horarios antes de bloquear',         getHorariosDisponibles(lunes).length > 0);
+        agenda3.bloqueadas = [lunes];
+        saveAgenda(agenda3);
+        assert('Lunes bloqueado → 0 horarios',                   getHorariosDisponibles(lunes).length === 0);
+        assert('fechaTieneDisponibilidad → false en bloqueado',  fechaTieneDisponibilidad(lunes) === false);
+
+        // Desbloquear
+        const agenda4 = getAgenda();
+        agenda4.bloqueadas = [];
+        saveAgenda(agenda4);
+        assert('Al desbloquear, lunes vuelve a tener horarios',  getHorariosDisponibles(lunes).length > 0);
+
+        // Modalidades
+        const agModif = getAgenda();
+        agModif.modalidades = ['Presencial', 'Online (videollamada)', 'Híbrida', 'Via telefónica'];
+        saveAgenda(agModif);
+        const reload = getAgenda();
+        assert('Modalidades se guardan correctamente',           reload.modalidades.length === 4);
+        assert('Nueva modalidad existe',                         reload.modalidades.includes('Via telefónica'));
+    }
+
+    function testDataIntegrity() {
+        suite('10. Integridad de datos — múltiples operaciones concatenadas');
+        track('crearCita'); track('actualizarEstadoCita'); track('eliminarCita'); track('getCitas');
+
+        cleanLS();
+
+        const lunes  = nextWeekday(1);
+        const martes = nextWeekday(2);
+
+        // Crear citas una por una con espera entre cada una para garantizar IDs únicos
+        // (crearCita usa Date.now() — sin delay pueden colisionar en el mismo ms)
+        const datos = [
+            { nombre:'Paciente 1', email:'p1@test.com', fecha: lunes,   hora:'09:00' },
+            { nombre:'Paciente 2', email:'p2@test.com', fecha: lunes,   hora:'10:00' },
+            { nombre:'Paciente 3', email:'p3@test.com', fecha: lunes,   hora:'11:00' },
+            { nombre:'Paciente 4', email:'p4@test.com', fecha: martes,  hora:'15:00' },
+            { nombre:'Paciente 5', email:'p5@test.com', fecha: martes,  hora:'16:00' },
+        ];
+
+        const creadas = [];
+        for (const d of datos) {
+            await_ms(3); // garantiza Date.now() diferente entre citas
+            const c = crearCita({ ...d, modalidad: 'Presencial' });
+            creadas.push(c);
+        }
+
+        // Verificar IDs únicos antes de continuar
+        const idsUnicos = new Set(creadas.map(c => c.id));
+        assert('Todos los IDs de las 5 citas son únicos',       idsUnicos.size === 5, `únicos: ${idsUnicos.size}/5`);
+        assert('Se crearon 5 citas correctamente',               getCitas().length === 5);
+
+        // Confirmar las primeras 4, dejar la 5ta pendiente
+        creadas.slice(0, 4).forEach(c => actualizarEstadoCita(c.id, 'confirmada'));
+
+        const confirmadas = getCitas().filter(c => c.estado === 'confirmada');
+        const pendientes  = getCitas().filter(c => c.estado === 'pendiente');
+        assert('4 citas confirmadas',                            confirmadas.length === 4,
+            `encontradas: ${confirmadas.length}`);
+        assert('1 cita sigue pendiente',                         pendientes.length === 1,
+            `encontradas: ${pendientes.length}`);
+        assert('La pendiente es "Paciente 5"',                   pendientes[0]?.nombre === 'Paciente 5');
+
+        // Lunes tiene citas en 09:00, 10:00 y 11:00 → deben estar bloqueados
+        const disponiblesLunes = getHorariosDisponibles(lunes);
+        assert('09:00 bloqueado en lunes (cita confirmada)',     !disponiblesLunes.includes('09:00'));
+        assert('10:00 bloqueado en lunes (cita confirmada)',     !disponiblesLunes.includes('10:00'));
+        assert('11:00 bloqueado en lunes (cita confirmada)',     !disponiblesLunes.includes('11:00'));
+        assert('15:00 sigue libre en lunes (ninguna cita ahí)', disponiblesLunes.includes('15:00'));
+
+        // Martes: 15:00 y 16:00 bloqueados (1 confirmada + 1 pendiente)
+        const disponiblesMartes = getHorariosDisponibles(martes);
+        assert('15:00 bloqueado en martes (cita confirmada)',    !disponiblesMartes.includes('15:00'));
+        assert('16:00 bloqueado en martes (cita pendiente)',     !disponiblesMartes.includes('16:00'));
+
+        // Eliminar todas y verificar limpieza
+        creadas.forEach(c => eliminarCita(c.id));
+        assert('Después de eliminar todas, array vacío',         getCitas().length === 0);
+
+        // Storage queda limpio
+        const raw = localStorage.getItem('psico_citas');
+        const parsed = JSON.parse(raw);
+        assert('localStorage["psico_citas"] queda como array vacío',
+            Array.isArray(parsed) && parsed.length === 0);
+    }
+
+    function testEdgeCases() {
+        suite('11. Casos borde y validaciones implícitas');
+
+        cleanLS();
+
+        // Cita con telefono undefined → queda ''
+        const c1 = crearCita({ nombre:'Test', email:'x@x.com', fecha: nextWeekday(1), hora:'09:00', modalidad:'Presencial' });
+        assert('telefono undefined → string vacío en la cita',   c1.telefono === '');
+        assert('motivo undefined → string vacío',                c1.motivo === '');
+        eliminarCita(c1.id);
+
+        // formatFecha con fecha de borde: año bisiesto
+        const leap = formatFecha('2028-02-29');
+        assert('formatFecha() maneja año bisiesto sin error',    leap.length > 5, leap);
+        assert('29 de Febrero 2028 → contiene "Febrero"',        leap.includes('Febrero'), leap);
+        assert('29 de Febrero 2028 → contiene "29"',             leap.includes('29'), leap);
+
+        // getDB con JSON inválido en localStorage
+        localStorage.setItem('psico_portfolio_data', '{ invalid json ');
+        const dbFallback = getDB();
+        assert('getDB() con JSON inválido cae a defaults sin crash',
+            dbFallback && Array.isArray(dbFallback.articulos));
+        cleanLS();
+
+        // getCitas con JSON inválido
+        localStorage.setItem('psico_citas', '<<invalid>>');
+        const citasFallback = getCitas();
+        assert('getCitas() con JSON inválido devuelve array vacío', Array.isArray(citasFallback) && citasFallback.length === 0);
+        cleanLS();
+
+        // getAgenda con JSON inválido
+        localStorage.setItem('psico_agenda', 'BROKEN}}}');
+        const agendaFallback = getAgenda();
+        assert('getAgenda() con JSON inválido devuelve defaults', agendaFallback && agendaFallback.dias);
+        cleanLS();
+
+        // IDs son únicos (timestamp-based)
+        const c2 = crearCita({ nombre:'A', email:'a@a.com', fecha: nextWeekday(1), hora:'09:00', modalidad:'Presencial' });
+        await_ms(3);
+        const c3 = crearCita({ nombre:'B', email:'b@b.com', fecha: nextWeekday(1), hora:'10:00', modalidad:'Presencial' });
+        assert('IDs de citas distintas son diferentes', c2.id !== c3.id);
+        eliminarCita(c2.id);
+        eliminarCita(c3.id);
+
+        // Días labels correctos
+        const ag = getAgenda();
+        const labels = Object.values(ag.dias).map(d => d.label);
+        ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'].forEach(l => {
+            assert(`Label "${l}" existe en los días de la agenda`, labels.includes(l));
+        });
+    }
+
+    function testDefaultDataConsistency() {
+        suite('12. Consistencia de DEFAULT_DATA');
+
+        cleanLS();
+
+        const db = getDB();
+
+        // 4 artículos
+        assert('Hay exactamente 4 artículos por defecto',    db.articulos.length === 4);
+
+        // IDs únicos
+        const ids = db.articulos.map(a => a.id);
+        const uniqueIds = new Set(ids);
+        assert('Todos los IDs de artículos son únicos',      uniqueIds.size === ids.length);
+
+        // Colores Tailwind
+        const colorRegex = /^(from|via|to|bg|text)-/;
+        db.articulos.forEach((art, i) => {
+            assert(`Art ${i+1}: color_desde tiene formato Tailwind`, colorRegex.test(art.color_desde), art.color_desde);
+            assert(`Art ${i+1}: color_via tiene formato Tailwind`,   colorRegex.test(art.color_via), art.color_via);
+            assert(`Art ${i+1}: color_hasta tiene formato Tailwind`, colorRegex.test(art.color_hasta), art.color_hasta);
+        });
+
+        // Frases no vacías
+        Object.entries(db.frases).forEach(([key, val]) => {
+            assert(`Frase "${key}" no está vacía`, typeof val === 'string' && val.length > 0, `"${val.substring(0,30)}..."`);
+        });
+
+        // Agenda default: días activos Lun-Vie
+        const ag = getAgenda();
+        ['1','2','3','4','5'].forEach(d => {
+            assert(`Día ${ag.dias[d].label} está activo en defaults`, ag.dias[d].activo === true);
+            assert(`Día ${ag.dias[d].label} tiene horarios en defaults`, ag.dias[d].horarios.length > 0);
+        });
+        assert('Hay al menos 3 modalidades por defecto', ag.modalidades.length >= 3);
+    }
+
+    // ============================================================
+    // HELPER: pequeña espera síncrona para que los IDs difieran
+    // ============================================================
+    function await_ms(ms) {
+        const end = Date.now() + ms;
+        while (Date.now() < end) {}
+    }
+
+    // ============================================================
+    // RUNNER PRINCIPAL
+    // ============================================================
+    async function runAllTests() {
+        clearOutput();
+        passed = 0; failed = 0; warned = 0;
+        coveredFns.clear();
+
+        const btn = document.getElementById('btn-run');
+        btn.innerHTML = '<span class="spinner">⟳</span> Ejecutando...';
+        btn.disabled = true;
+
+        log('🧪 Iniciando test suite — ' + new Date().toLocaleTimeString('es-AR'), 'info');
+        log('──────────────────────────────────────────────────────────', 'dim');
+
+        const suites = [
+            testLocalStorage,
+            testGetDB,
+            testAgenda,
+            testHorariosDisponibles,
+            testCitas,
+            testHorariosConCitas,
+            testFormatFecha,
+            testCitaManual,
+            testAgendaExtras,
+            testDataIntegrity,
+            testEdgeCases,
+            testDefaultDataConsistency,
+        ];
+
+        for (const fn of suites) {
+            try {
+                fn();
+            } catch(e) {
+                failed++;
+                log(`  💥 ERROR INESPERADO en ${fn.name}: ${e.message}`, 'fail');
+                console.error(e);
+            }
+            // Micro-pausa para que el DOM se actualice
+            await new Promise(r => setTimeout(r, 10));
+        }
+
+        // Limpiar localStorage al terminar
+        cleanLS();
+
+        // Resumen
+        log('');
+        log('──────────────────────────────────────────────────────────', 'dim');
+        log(`📊 Resultado: ${passed} pasaron · ${failed} fallaron · ${warned} advertencias`, failed > 0 ? 'fail' : 'pass');
+
+        const summaryEl = document.getElementById('summary');
+        summaryEl.className = `rounded-xl p-4 mb-6 text-sm font-semibold ${failed === 0 ? 'summary-pass text-green-300' : 'summary-fail text-red-300'}`;
+        summaryEl.innerHTML = failed === 0
+            ? `✅ Todos los tests pasaron (${passed}/${passed}) — Sistema funcionando correctamente`
+            : `❌ ${failed} test${failed>1?'s':''} fallaron · ${passed} pasaron · Revisá los errores arriba`;
+        summaryEl.classList.remove('hidden');
+
+        // Cobertura
+        const covEl = document.getElementById('coverage');
+        const covList = document.getElementById('coverage-list');
+        covList.innerHTML = allFns.map(fn => {
+            const covered = coveredFns.has(fn);
+            return `<div class="flex items-center gap-2 bg-slate-700 rounded-lg px-3 py-2">
+                <span class="${covered ? 'text-green-400' : 'text-red-400'}">${covered ? '✅' : '❌'}</span>
+                <code class="text-slate-200">${fn}()</code>
+            </div>`;
+        }).join('');
+        const pct = Math.round((coveredFns.size / allFns.length) * 100);
+        covEl.querySelector('h2').innerHTML = `📊 Cobertura de funciones — <span class="${pct===100?'text-green-400':'text-yellow-400'}">${coveredFns.size}/${allFns.length} (${pct}%)</span>`;
+        covEl.classList.remove('hidden');
+
+        btn.innerHTML = '▶ Ejecutar todos los tests';
+        btn.disabled = false;
+    }
+    </script>
+</body>
+</html>

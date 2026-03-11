@@ -1,0 +1,543 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candela González - Psicóloga Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-amber-50 text-stone-800">
+    
+    <!-- NAVBAR --> 
+    <nav class="bg-amber-50/95 backdrop-blur-lg border-b border-amber-200/70 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- LOGO -->
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-stone-700 via-amber-800 to-stone-900 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:shadow-amber-700/30 transition-all duration-300 transform group-hover:-rotate-3">
+                            <span class="text-white font-bold text-xl">C</span>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-amber-700 rounded-full opacity-70"></div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <p class="text-sm font-bold text-stone-900 group-hover:text-amber-800 transition-colors">Candela González</p>
+                        <p class="text-xs text-stone-500">Psicóloga Profesional</p>
+                    </div>
+                </div>
+
+                <!-- MENÚ DESKTOP -->
+                <ul class="hidden lg:flex gap-2 text-sm font-medium">
+                    <li><a href="#inicio" class="relative px-4 py-2 rounded-xl text-stone-600 hover:text-amber-800 hover:bg-amber-100/60 transition-all duration-300 group">
+                        <span class="relative z-10">Inicio</span>
+                    </a></li>
+                    <li><a href="#sobre-mi" class="relative px-4 py-2 rounded-xl text-stone-600 hover:text-amber-800 hover:bg-amber-100/60 transition-all duration-300 group">
+                        <span class="relative z-10">Sobre mí</span>
+                    </a></li>
+                    <li><a href="#blog" class="relative px-4 py-2 rounded-xl text-stone-600 hover:text-amber-800 hover:bg-amber-100/60 transition-all duration-300 group">
+                        <span class="relative z-10">Reflexiones</span>
+                    </a></li>
+                    <li><a href="#contacto" class="relative px-4 py-2 rounded-xl text-stone-600 hover:text-amber-800 hover:bg-amber-100/60 transition-all duration-300 group">
+                        <span class="relative z-10">Contacto</span>
+                    </a></li>
+                </ul>
+
+                <!-- BOTÓN CTA -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="https://wa.me/543584397037" target="_blank" rel="noopener noreferrer"
+                       class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.927a.5.5 0 00.608.61l6.197-1.603A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.884 9.884 0 01-5.031-1.374l-.36-.214-3.733.966.995-3.638-.235-.374A9.86 9.86 0 012.1 12C2.1 6.533 6.533 2.1 12 2.1S21.9 6.533 21.9 12 17.467 21.9 12 21.9z"/></svg>
+                        WhatsApp
+                    </a>
+                    <a href="#contacto" class="bg-gradient-to-r from-stone-700 to-amber-800 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-amber-700/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                        Agendar Cita
+                    </a>
+                </div>
+
+                <!-- MENÚ MÓVIL -->
+                <button class="lg:hidden text-stone-700 p-2 hover:bg-stone-50 rounded-xl transition-all duration-300">
+                    <div class="w-6 h-6 flex flex-col justify-center items-center gap-1.5">
+                        <div class="w-5 h-0.5 bg-current rounded-full transition-all"></div>
+                        <div class="w-5 h-0.5 bg-current rounded-full transition-all"></div>
+                        <div class="w-3 h-0.5 bg-current rounded-full transition-all"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+        <!-- BARRA DE PROGRESO SCROLL -->
+        <div class="h-0.5 bg-amber-100">
+            <div class="h-full bg-gradient-to-r from-amber-700 to-stone-600 w-0 transition-all duration-200" id="scrollProgress"></div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="inicio" class="relative overflow-hidden bg-gradient-to-br from-amber-50 via-stone-100 to-amber-100/80 min-h-screen">
+        <!-- ELEMENTOS GEOMÉTRICOS DECORATIVOS -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-20 right-10 w-72 h-72 bg-amber-300 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-40 left-10 w-56 h-56 bg-stone-400 rotate-45 opacity-15 blur-2xl"></div>
+            <div class="absolute top-1/2 right-1/3 w-32 h-32 bg-amber-800 rounded-2xl opacity-10 rotate-12"></div>
+            <div class="absolute top-1/4 left-1/4 w-20 h-20 border-4 border-amber-300 rounded-full opacity-25"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 py-20 md:py-32">
+            <div class="grid lg:grid-cols-12 gap-12 items-center min-h-[85vh]">
+
+                <!-- CONTENIDO IZQUIERDA -->
+                <div class="lg:col-span-6 space-y-8">
+                    <!-- BADGE -->
+                    <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur text-amber-900 px-5 py-2.5 rounded-full text-sm font-semibold border border-amber-300/60 shadow-sm">
+                        <div class="w-2 h-2 bg-amber-700 rounded-full"></div>
+                        <span data-psico="hero_badge">Psicología y Bienestar</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h1 class="text-6xl md:text-7xl lg:text-8xl font-thin text-stone-900 leading-none tracking-tight">
+                            <span class="block">Candela</span>
+                            <span class="block font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">González</span>
+                        </h1>
+                        <p class="text-lg text-stone-600 leading-relaxed max-w-lg" data-psico="hero_titulo">
+                            Acompañamiento integral para mujeres que buscan vivir con autenticidad, equilibrio y propósito.
+                        </p>
+                    </div>
+
+                    <!-- TAGS -->
+                    <div class="flex flex-wrap gap-3">
+                        <span class="bg-amber-100/80 backdrop-blur text-amber-900 px-4 py-2 rounded-full text-xs font-semibold border border-amber-300/60 shadow-sm">Terapia Individual</span>
+                        <span class="bg-stone-100/80 backdrop-blur text-stone-700 px-4 py-2 rounded-full text-xs font-semibold border border-stone-300/60 shadow-sm">Coaching</span>
+                        <span class="bg-amber-100/80 backdrop-blur text-stone-700 px-4 py-2 rounded-full text-xs font-semibold border border-stone-300/60 shadow-sm">Bienestar</span>
+                    </div>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-2">
+                        <a href="#contacto" class="group bg-gradient-to-r from-stone-700 to-amber-800 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-2xl hover:shadow-amber-700/30 transition-all duration-300 transform hover:-translate-y-1 text-center">
+                            <span class="flex items-center justify-center gap-2">
+                                Agendar sesión
+                                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                            </span>
+                        </a>
+                        <a href="#sobre-mi" class="border-2 border-amber-700/60 text-amber-900 px-8 py-4 rounded-2xl font-semibold hover:bg-amber-100 transition-all duration-300 text-center">
+                            Conoceme
+                        </a>
+                    </div>
+
+                    <!-- INFO -->
+                    <div class="pt-4 border-t border-amber-200/60 flex flex-wrap gap-6 text-sm text-stone-500">
+                        <span>📍 Río Cuarto, Córdoba · Online</span>
+                        <span>🕐 Lun – Vie, 9:00 – 19:00</span>
+                    </div>
+                </div>
+
+                <!-- IMAGEN DERECHA -->
+                <div class="lg:col-span-6">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-amber-700 to-stone-600 rounded-3xl rotate-3 opacity-15 blur-sm"></div>
+                        <div class="absolute -inset-2 bg-gradient-to-r from-stone-500 to-amber-600 rounded-3xl -rotate-2 opacity-15"></div>
+
+                        <div class="relative bg-white rounded-3xl shadow-2xl p-6 overflow-hidden">
+                            <div class="rounded-2xl overflow-hidden bg-gradient-to-br from-amber-50 to-stone-100 flex items-center justify-center aspect-[4/5]">
+                                <img src="assets/images/Avatar.jpg"
+                                     alt="Candela González - Psicóloga Profesional"
+                                     class="w-full h-full object-contain rounded-xl transition-all duration-500 hover:scale-105"
+                                     loading="eager"
+                                     decoding="async"
+                                     style="image-rendering: auto; filter: brightness(1.05) contrast(1.05) saturate(1.05);">
+                            </div>
+
+                            <!-- BADGE MATRÍCULA -->
+                            <div class="absolute top-4 right-4 bg-white/95 backdrop-blur rounded-2xl px-4 py-2 shadow-lg border border-amber-200">
+                                <p class="text-sm font-bold text-amber-900">MP: 15457</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SCROLL INDICATOR -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-amber-600/50 rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-amber-700 rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </header>
+
+
+    <!-- SOBRE MÍ -->
+    <section id="sobre-mi" class="relative bg-gradient-to-br from-amber-50 via-stone-100/60 to-amber-100/50 py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-20 w-40 h-40 bg-amber-300/25 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 left-10 w-32 h-32 bg-stone-400/20 rotate-45 blur-2xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <!-- HEADER DE SECCIÓN -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-3 bg-white/70 backdrop-blur text-amber-900 px-6 py-3 rounded-2xl text-sm font-semibold border border-amber-300/50 shadow-sm mb-6">
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                    Mi Historia Profesional
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-thin text-stone-900 leading-tight">
+                    Más que una<br>
+                    <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">Psicóloga</span>
+                </h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-16 items-start">
+
+                <!-- IMAGEN -->
+                <div class="lg:col-span-5">
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-6 overflow-hidden">
+                        <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-amber-50 to-stone-200">
+                            <img src="assets/images/about me.jpg"
+                                 alt="Candela González - Sobre mí"
+                                 class="w-full h-full object-cover object-center rounded-xl transition-all duration-500 hover:scale-105"
+                                 loading="lazy"
+                                 decoding="async">
+                        </div>
+                        <div class="absolute top-4 right-4 bg-white/95 backdrop-blur rounded-2xl px-4 py-2 shadow-lg border border-amber-200">
+                            <p class="text-sm font-bold text-amber-900">MP: 15457</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO -->
+                <div class="lg:col-span-7 space-y-8 pt-4">
+                    <p class="text-xl text-stone-600 leading-relaxed">
+                        Soy Candela González, una profesional apasionada por el acompañamiento humano. Mi especialidad es guiar a mujeres hacia el equilibrio perfecto entre sus metas profesionales y su bienestar personal.
+                    </p>
+                    <p class="text-lg text-stone-600 leading-relaxed">
+                        Trabajo con un enfoque integral, combinando técnicas basadas en evidencia con una escucha profunda y empática, para que puedas transformar los desafíos en oportunidades de crecimiento.
+                    </p>
+
+                    <!-- CITA -->
+                    <div class="relative bg-gradient-to-r from-amber-700 to-stone-700 p-0.5 rounded-3xl">
+                        <div class="bg-white rounded-3xl p-8">
+                            <div class="text-5xl text-amber-300 mb-3 leading-none">"</div>
+                            <p class="text-stone-700 text-lg italic leading-relaxed" data-psico="sobre_mi_quote">
+                                Creo que el verdadero éxito no es solo lograr metas profesionales, sino hacerlo de una manera que nos permita disfrutar del camino.
+                            </p>
+                            <div class="flex items-center gap-3 mt-6">
+                                <div class="w-10 h-10 bg-gradient-to-r from-amber-700 to-stone-700 rounded-full flex items-center justify-center">
+                                    <span class="text-white font-bold text-sm">C</span>
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-stone-900 text-sm">Candela González</p>
+                                    <p class="text-xs text-stone-500">Psicóloga Profesional</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CREDENCIALES -->
+                    <div class="grid sm:grid-cols-3 gap-4 pt-2">
+                        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 shadow-sm border border-amber-200/50 hover:shadow-md transition-all duration-300 group">
+                            <div class="w-10 h-10 bg-gradient-to-r from-amber-700 to-stone-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <span class="text-white text-lg">🎓</span>
+                            </div>
+                            <h4 class="font-semibold text-stone-900 text-sm mb-1">Licenciatura en Psicología</h4>
+                            <p class="text-stone-500 text-xs leading-relaxed">Formación académica en ciencias del comportamiento</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 shadow-sm border border-amber-200/50 hover:shadow-md transition-all duration-300 group">
+                            <div class="w-10 h-10 bg-gradient-to-r from-amber-700 to-stone-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <span class="text-white text-lg">🧠</span>
+                            </div>
+                            <h4 class="font-semibold text-stone-900 text-sm mb-1">Terapia Cognitivo-Conductual</h4>
+                            <p class="text-stone-500 text-xs leading-relaxed">Técnicas basadas en evidencia científica</p>
+                        </div>
+                        <div class="bg-white/70 backdrop-blur rounded-2xl p-5 shadow-sm border border-amber-200/50 hover:shadow-md transition-all duration-300 group">
+                            <div class="w-10 h-10 bg-gradient-to-r from-amber-700 to-stone-700 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                <span class="text-white text-lg">🌱</span>
+                            </div>
+                            <h4 class="font-semibold text-stone-900 text-sm mb-1">Coaching de Bienestar</h4>
+                            <p class="text-stone-500 text-xs leading-relaxed">Desarrollo personal y profesional integral</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG / REFLEXIONES -->
+    <section id="blog" class="relative bg-gradient-to-br from-amber-50 via-stone-100/40 to-amber-100/50 py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-20 w-32 h-32 bg-amber-300/25 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-20 left-10 w-24 h-24 bg-stone-400/20 rotate-45 blur-xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <!-- HEADER -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-3 bg-white/70 backdrop-blur text-amber-900 px-6 py-3 rounded-2xl text-sm font-semibold border border-amber-300/50 shadow-sm mb-6">
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                    Reflexiones & Artículos
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-thin text-stone-900 mb-4">
+                    Pensamientos que<br>
+                    <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">inspiran</span>
+                </h2>
+                <p class="text-stone-600 max-w-2xl mx-auto leading-relaxed" data-psico="blog_subtitulo">
+                    Explorando la psicología moderna, el bienestar emocional y el crecimiento personal a través de reflexiones profundas.
+                </p>
+            </div>
+
+            <!-- GRID ARTÍCULOS (renderizado dinámicamente por site-loader.js) -->
+            <div class="grid lg:grid-cols-2 gap-8" id="articulos-grid">
+                <!-- Los artÃ­culos se renderizan desde localStorage/data.js -->
+            </div>
+
+        </div>
+    </section>
+
+    <!-- MI ENFOQUE -->
+    <section class="bg-white py-20 md:py-32">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-thin text-slate-900 mb-4">
+                    Mi <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">Enfoque</span>
+                </h2>
+                <p class="text-stone-500 max-w-2xl mx-auto" data-psico="enfoque_subtitulo">
+                    Trabajo con un enfoque holístico que integra técnicas modernas con una escucha profunda y empática.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group bg-gradient-to-br from-green-50 to-stone-100/60 p-8 rounded-3xl hover:shadow-xl transition-all duration-500 border border-stone-200/60 hover:-translate-y-1">
+                    <div class="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300">🌱</div>
+                    <h3 class="text-xl font-semibold text-stone-900 mb-3">Crecimiento Natural</h3>
+                    <p class="text-stone-600 leading-relaxed text-sm">
+                        Acompañamiento que respeta tu ritmo y promueve el crecimiento desde adentro hacia afuera.
+                    </p>
+                </div>
+                <div class="group bg-gradient-to-br from-blue-50 to-blue-100/50 p-8 rounded-3xl hover:shadow-xl transition-all duration-500 border border-blue-100 hover:-translate-y-1">
+                    <div class="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300">🧘</div>
+                    <h3 class="text-xl font-semibold text-stone-900 mb-3">Bienestar Integral</h3>
+                    <p class="text-stone-600 leading-relaxed text-sm">
+                        Trabajo sobre cuerpo, mente y emociones para un equilibrio duradero en tu vida.
+                    </p>
+                </div>
+                <div class="group bg-gradient-to-br from-amber-50 to-amber-100/50 p-8 rounded-3xl hover:shadow-xl transition-all duration-500 border border-amber-100 hover:-translate-y-1">
+                    <div class="text-5xl mb-5 group-hover:scale-110 transition-transform duration-300">🌿</div>
+                    <h3 class="text-xl font-semibold text-stone-900 mb-3">Autenticidad</h3>
+                    <p class="text-stone-600 leading-relaxed text-sm">
+                        Un espacio seguro donde puedes ser tú misma sin máscaras ni expectativas externas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGENDAR SESIÓN -->
+    <section id="contacto" class="relative bg-gradient-to-br from-stone-100 via-amber-50/60 to-stone-100 py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-10 w-40 h-40 bg-amber-300/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 left-10 w-32 h-32 bg-stone-400/15 blur-2xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-3 bg-white/70 backdrop-blur text-amber-900 px-6 py-3 rounded-2xl text-sm font-semibold border border-amber-300/50 shadow-sm mb-6">
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                    Reservá tu lugar
+                </div>
+                <h2 class="text-5xl md:text-6xl font-thin text-stone-900 mb-4">
+                    <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">Agendar Sesión</span>
+                </h2>
+                <p class="text-stone-500 max-w-xl mx-auto text-sm leading-relaxed">
+                    Elegí el día y horario que mejor se adapte a vos. Te voy a confirmar la sesión a la brevedad.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10">
+
+                <!-- INFO + DATOS DE CONTACTO -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-3xl shadow-xl p-8 border border-stone-200/50">
+                        <h3 class="text-lg font-semibold text-stone-900 mb-6">Información de Contacto</h3>
+                        <div class="space-y-5">
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-stone-100 rounded-xl flex items-center justify-center shrink-0"><span>📧</span></div>
+                                <div>
+                                    <p class="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Email</p>
+                                    <a href="mailto:candela@example.com" class="text-amber-800 hover:text-stone-700 font-medium text-sm">candela@example.com</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-stone-100 rounded-xl flex items-center justify-center shrink-0"><span>📱</span></div>
+                                <div>
+                                    <p class="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">WhatsApp</p>
+                                    <a href="https://wa.me/543584397037" class="text-amber-800 hover:text-stone-700 font-medium text-sm">+54 358 439-7037</a>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-stone-100 rounded-xl flex items-center justify-center shrink-0"><span>📍</span></div>
+                                <div>
+                                    <p class="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Ubicación</p>
+                                    <p class="text-stone-700 text-sm">Río Cuarto, Córdoba · Consultas Online</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="w-10 h-10 bg-stone-100 rounded-xl flex items-center justify-center shrink-0"><span>🕐</span></div>
+                                <div>
+                                    <p class="text-xs text-stone-400 font-medium uppercase tracking-wide mb-0.5">Horarios</p>
+                                    <p class="text-stone-700 text-sm">Lunes a Viernes: 9:00 – 19:00</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-stone-100">
+                            <p class="text-xs text-stone-400 font-medium uppercase tracking-wide mb-4">Seguime en redes</p>
+                            <div class="flex gap-3">
+                                <a href="#" class="w-10 h-10 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5">📱</a>
+                                <a href="#" class="w-10 h-10 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5">💼</a>
+                                <a href="#" class="w-10 h-10 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5">🐦</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MINI RESUMEN DISPONIBILIDAD -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+                        <p class="text-xs font-semibold text-amber-800 uppercase tracking-wide mb-3">💡 Cómo agendar</p>
+                        <ol class="text-sm text-stone-600 space-y-1.5 list-decimal list-inside">
+                            <li>Completá el formulario con tus datos</li>
+                            <li>Elegí el día y el horario disponible</li>
+                            <li>Seleccioná la modalidad (presencial u online)</li>
+                            <li>Enviá tu solicitud – te confirmo a la brevedad 🌿</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- FORMULARIO DE AGENDAMIENTO -->
+                <div class="bg-white rounded-3xl shadow-xl p-8 border border-stone-200/50" id="booking-form-container">
+
+                    <!-- VISTA: FORMULARIO -->
+                    <div id="booking-form-view">
+                        <h3 class="text-lg font-semibold text-stone-900 mb-6">Reservar turno</h3>
+                        <form id="booking-form" class="space-y-4" novalidate>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Nombre completo *</label>
+                                    <input type="text" id="b-nombre" required placeholder="Tu nombre y apellido"
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Email *</label>
+                                    <input type="email" id="b-email" required placeholder="tu@email.com"
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Teléfono</label>
+                                    <input type="tel" id="b-telefono" placeholder="+54 9 3544..."
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Fecha *</label>
+                                    <input type="date" id="b-fecha" required
+                                           class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Horario *</label>
+                                    <select id="b-hora" required
+                                            class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all bg-white">
+                                        <option value="">– Elegí una fecha primero –</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Modalidad *</label>
+                                    <select id="b-modalidad" required
+                                            class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all bg-white">
+                                        <option value="">Seleccioná modalidad</option>
+                                    </select>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">¿Por qué querés consultar? <span class="text-stone-400 normal-case font-normal">(opcional)</span></label>
+                                    <textarea id="b-motivo" rows="3" placeholder="Contame brevemente lo que te trae..."
+                                              class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all resize-none"></textarea>
+                                </div>
+                            </div>
+
+                            <div id="booking-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl"></div>
+
+                            <button type="submit"
+                                    class="w-full bg-gradient-to-r from-stone-700 to-amber-800 text-white px-6 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-amber-700/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                                Solicitar turno →
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- VISTA: CONFIRMACIÃ“N -->
+                    <div id="booking-success-view" class="hidden flex-col items-center justify-center text-center py-8 space-y-5">
+                        <div class="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center text-4xl">🌿</div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-stone-900 mb-2">¡Solicitud enviada!</h3>
+                            <p class="text-stone-500 text-sm leading-relaxed max-w-sm">
+                                Recibí tu solicitud de turno. En breve te contacto para confirmar la sesión.
+                            </p>
+                        </div>
+                        <div id="booking-resumen" class="bg-amber-50 border border-amber-200 rounded-2xl p-5 w-full text-left text-sm space-y-2"></div>
+                        <button onclick="resetBookingForm()"
+                                class="text-amber-800 underline text-sm hover:text-stone-700 transition-colors">
+                            Agendar otra sesión
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-700 to-stone-700 flex items-center justify-center">
+                        <span class="text-white font-bold">C</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-white text-sm">Candela González</p>
+                        <p class="text-amber-400/80 text-xs">Psicóloga Profesional</p>
+                    </div>
+                </div>
+                <p class="text-stone-400 text-sm text-center">
+                    © 2024 Candela González - Psicóloga. Todos los derechos reservados.
+                </p>
+                <p class="text-stone-500 text-sm">
+                    Desarrollado con ❤️ por Teamplates Psico
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/543584397037" target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-green-500 hover:bg-green-600 text-white pl-4 pr-5 py-3.5 rounded-2xl shadow-2xl shadow-green-500/40 hover:shadow-green-500/60 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 group">
+        <svg class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+            <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.927a.5.5 0 00.608.61l6.197-1.603A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.9a9.884 9.884 0 01-5.031-1.374l-.36-.214-3.733.966.995-3.638-.235-.374A9.86 9.86 0 012.1 12C2.1 6.533 6.533 2.1 12 2.1S21.9 6.533 21.9 12 17.467 21.9 12 21.9z"/>
+        </svg>
+        <span class="font-semibold text-sm">Escribime</span>
+    </a>
+
+    <script>
+        // Barra de progreso scroll
+        window.addEventListener('scroll', () => {
+            const el = document.getElementById('scrollProgress');
+            if (el) {
+                const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+                el.style.width = scrolled + '%';
+            }
+        });
+    </script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script src="site-loader.js"></script>
+
+</body>
+</html>
+

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin — Candela González</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-active { background: #b45309; color: white; box-shadow: 0 2px 8px rgba(180,83,9,0.25); }
+        .input-field {
+            width: 100%;
+            padding: 0.6rem 0.9rem;
+            border: 1.5px solid #d6cfc4;
+            border-radius: 0.6rem;
+            font-size: 0.875rem;
+            background: #fffdf9;
+            color: #3d332a;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-field:focus { border-color: #92400e; box-shadow: 0 0 0 3px rgba(146,64,14,0.1); }
+        textarea.input-field { resize: vertical; min-height: 80px; }
+        .card-admin { background: white; border-radius: 1.25rem; padding: 1.5rem; border: 1.5px solid #e7e0d6; box-shadow: 0 2px 12px rgba(120,80,30,0.06); margin-bottom: 1.25rem; }
+        .label { font-size: 0.75rem; font-weight: 600; color: #78716c; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; display: block; }
+        .btn-save { background: linear-gradient(to right, #44403c, #92400e); color: white; padding: 0.65rem 1.5rem; border-radius: 0.65rem; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-save:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(146,64,14,0.3); }
+        .btn-reset { background: #fee2e2; color: #b91c1c; padding: 0.65rem 1.5rem; border-radius: 0.65rem; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; cursor: pointer; border: none; }
+        .btn-reset:hover { background: #fecaca; }
+        .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #16a34a; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.875rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 9999; opacity: 0; transform: translateY(1rem); transition: all 0.3s; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+        .toast.error { background: #dc2626; }
+        .emoji-preview { font-size: 2.5rem; background: rgba(146,64,14,0.08); border-radius: 1rem; padding: 0.5rem 0.75rem; display: inline-block; line-height: 1; }
+        .section-divider { height: 1px; background: linear-gradient(to right, transparent, #d6cfc4, transparent); margin: 2rem 0; }
+        .filtro-btn.active { background: #92400e; color: white; border-color: #92400e; }
+        .badge-estado { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+        .badge-pendiente  { background: #fef3c7; color: #92400e; }
+        .badge-confirmada { background: #d1fae5; color: #065f46; }
+        .badge-cancelada  { background: #fee2e2; color: #991b1b; }
+        .cita-card { background: white; border: 1.5px solid #e7e0d6; border-radius: 1rem; padding: 1.25rem; margin-bottom: 0.75rem; }
+        .cita-card.pendiente  { border-left: 4px solid #f59e0b; }
+        .cita-card.confirmada { border-left: 4px solid #10b981; }
+        .cita-card.cancelada  { border-left: 4px solid #ef4444; opacity: 0.75; }
+        .btn-confirmar { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; padding: 0.35rem 0.85rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .btn-confirmar:hover { background: #a7f3d0; }
+        .btn-cancelar  { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; padding: 0.35rem 0.85rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .btn-cancelar:hover { background: #fecaca; }
+        .btn-eliminar  { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; padding: 0.35rem 0.85rem; border-radius: 0.5rem; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
+        .btn-eliminar:hover { background: #e5e7eb; }
+        .horario-tag { display: inline-flex; align-items: center; gap: 0.35rem; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; border-radius: 0.5rem; padding: 0.25rem 0.6rem; font-size: 0.75rem; font-weight: 600; margin: 0.2rem; }
+        .horario-tag button { background: none; border: none; cursor: pointer; color: #b45309; font-size: 0.85rem; line-height: 1; padding: 0; }
+        .horario-tag button:hover { color: #92400e; }
+        .dia-row { border: 1.5px solid #e7e0d6; border-radius: 0.85rem; padding: 1rem 1.25rem; background: #fffdf9; }
+    </style>
+</head>
+<body class="bg-amber-50 min-h-screen">
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-stone-800 via-amber-900 to-stone-900 text-white py-5 px-6 shadow-xl sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-amber-700/50 rounded-xl flex items-center justify-center text-xl">⚙️</div>
+                <div>
+                    <h1 class="font-semibold text-lg leading-tight">Panel de Administración</h1>
+                    <p class="text-amber-300/80 text-xs">Candela González · Psicóloga</p>
+                </div>
+            </div>
+            <a href="index.html" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white text-sm px-4 py-2 rounded-xl transition-all duration-200 border border-white/20">
+                <span>←</span> Ver sitio
+            </a>
+        </div>
+    </header>
+
+    <!-- TABS -->
+    <div class="max-w-5xl mx-auto px-4 pt-8">
+        <div class="flex gap-2 mb-8 bg-white/60 backdrop-blur p-1.5 rounded-2xl border border-amber-200/50 shadow-sm w-fit flex-wrap">
+            <button onclick="showTab('articulos')" id="tab-articulos"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-stone-600 hover:text-stone-900 tab-active">
+                📝 Artículos
+            </button>
+            <button onclick="showTab('frases')" id="tab-frases"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-stone-600 hover:text-stone-900">
+                💬 Frases
+            </button>
+            <button onclick="showTab('citas')" id="tab-citas"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-stone-600 hover:text-stone-900">
+                📅 Citas <span id="badge-pendientes" class="ml-1 bg-amber-600 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+            </button>
+            <button onclick="showTab('agenda')" id="tab-agenda"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-stone-600 hover:text-stone-900">
+                🗓️ Mi Agenda
+            </button>
+            <button onclick="showTab('manual')" id="tab-manual"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-stone-600 hover:text-stone-900">
+                ✏️ Carga Manual
+            </button>
+        </div>
+
+        <!-- ======================== TAB: ARTÍCULOS ======================== -->
+        <div id="panel-articulos">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-light text-stone-900">Artículos & Reflexiones</h2>
+                    <p class="text-stone-500 text-sm mt-1">Editá el contenido de cada card que aparece en la sección "Reflexiones"</p>
+                </div>
+                <button onclick="saveArticulos()" class="btn-save">💾 Guardar cambios</button>
+            </div>
+
+            <div id="articulos-container">
+                <!-- Se renderiza por JS -->
+            </div>
+
+            <div class="flex gap-3 mt-6 pb-12">
+                <button onclick="saveArticulos()" class="btn-save">💾 Guardar todos los cambios</button>
+                <button onclick="resetArticulos()" class="btn-reset">↺ Restaurar defaults</button>
+            </div>
+        </div>
+
+        <!-- ======================== TAB: FRASES ======================== -->
+        <div id="panel-frases" class="hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-light text-stone-900">Frases del Sitio</h2>
+                    <p class="text-stone-500 text-sm mt-1">Textos clave que aparecen en las distintas secciones de la página</p>
+                </div>
+                <button onclick="saveFrases()" class="btn-save">💾 Guardar cambios</button>
+            </div>
+
+            <div class="grid gap-5 pb-12">
+
+                <!-- Frase Hero -->
+                <div class="card-admin">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl">🏠</span>
+                        <h3 class="font-semibold text-stone-800">Sección Inicio (Hero)</h3>
+                    </div>
+                    <div class="grid gap-4">
+                        <div>
+                            <label class="label">Badge / etiqueta superior</label>
+                            <input type="text" id="f_hero_badge" class="input-field" placeholder="Psicología y Bienestar">
+                        </div>
+                        <div>
+                            <label class="label">Subtítulo principal</label>
+                            <textarea id="f_hero_titulo" class="input-field" rows="3" placeholder="Acompañamiento integral..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Frase Sobre mí -->
+                <div class="card-admin">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl">💬</span>
+                        <h3 class="font-semibold text-stone-800">Sección Sobre mí — Cita inspiracional</h3>
+                    </div>
+                    <div>
+                        <label class="label">Texto de la cita (aparece entre comillas)</label>
+                        <textarea id="f_sobre_mi_quote" class="input-field" rows="4" placeholder="Creo que el verdadero éxito..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Frase Blog -->
+                <div class="card-admin">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl">📖</span>
+                        <h3 class="font-semibold text-stone-800">Sección Reflexiones — Subtítulo</h3>
+                    </div>
+                    <div>
+                        <label class="label">Descripción de la sección</label>
+                        <textarea id="f_blog_subtitulo" class="input-field" rows="3" placeholder="Explorando la psicología moderna..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Frase Enfoque -->
+                <div class="card-admin">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="text-xl">🌿</span>
+                        <h3 class="font-semibold text-stone-800">Sección Mi Enfoque — Subtítulo</h3>
+                    </div>
+                    <div>
+                        <label class="label">Descripción del enfoque</label>
+                        <textarea id="f_enfoque_subtitulo" class="input-field" rows="3" placeholder="Trabajo con un enfoque holístico..."></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex gap-3 pb-12">
+                <button onclick="saveFrases()" class="btn-save">💾 Guardar todas las frases</button>
+                <button onclick="resetFrases()" class="btn-reset">↺ Restaurar defaults</button>
+            </div>
+        </div>
+
+        <!-- ======================== TAB: CITAS ======================== -->
+        <div id="panel-citas" class="hidden pb-12">
+            <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+                <div>
+                    <h2 class="text-2xl font-light text-stone-900">Citas Agendadas</h2>
+                    <p class="text-stone-500 text-sm mt-1">Solicitudes de sesión enviadas por los visitantes</p>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button onclick="filtrarCitas('todas')" id="filtro-todas" class="filtro-btn px-4 py-2 rounded-xl text-xs font-semibold border border-stone-200 bg-white text-stone-700 transition-all">Todas</button>
+                    <button onclick="filtrarCitas('pendiente')" id="filtro-pendiente" class="filtro-btn px-4 py-2 rounded-xl text-xs font-semibold border border-amber-200 bg-amber-50 text-amber-800 transition-all">Pendientes</button>
+                    <button onclick="filtrarCitas('confirmada')" id="filtro-confirmada" class="filtro-btn px-4 py-2 rounded-xl text-xs font-semibold border border-green-200 bg-green-50 text-green-700 transition-all">Confirmadas</button>
+                    <button onclick="filtrarCitas('cancelada')" id="filtro-cancelada" class="filtro-btn px-4 py-2 rounded-xl text-xs font-semibold border border-red-200 bg-red-50 text-red-700 transition-all">Canceladas</button>
+                </div>
+            </div>
+            <div id="citas-container"></div>
+        </div>
+
+        <!-- ======================== TAB: AGENDA ======================== -->
+        <div id="panel-agenda" class="hidden pb-12">
+            <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+                <div>
+                    <h2 class="text-2xl font-light text-stone-900">Mi Agenda de Disponibilidad</h2>
+                    <p class="text-stone-500 text-sm mt-1">Configurá los días y horarios en que atendés.</p>
+                </div>
+                <button onclick="saveAgendaAdmin()" class="btn-save">💾 Guardar agenda</button>
+            </div>
+
+            <div class="card-admin mb-6">
+                <h3 class="font-semibold text-stone-800 mb-5">📅 Días y horarios regulares</h3>
+                <div id="agenda-dias-container" class="space-y-5"></div>
+            </div>
+
+            <div class="card-admin mb-6">
+                <h3 class="font-semibold text-stone-800 mb-4">📍 Modalidades disponibles</h3>
+                <div class="flex flex-wrap gap-2 mb-4" id="agenda-modalidades"></div>
+                <div class="flex gap-2">
+                    <input type="text" id="nueva-modalidad" placeholder="Nueva modalidad..." class="input-field" style="width:auto;flex:1;">
+                    <button onclick="agregarModalidad()" class="btn-save" style="white-space:nowrap;">+ Agregar</button>
+                </div>
+            </div>
+
+            <div class="card-admin mb-6">
+                <h3 class="font-semibold text-stone-800 mb-4">🚫 Fechas bloqueadas</h3>
+                <div id="agenda-bloqueadas" class="flex flex-wrap gap-2 mb-4"></div>
+                <div class="flex gap-2">
+                    <input type="date" id="nueva-bloqueada" class="input-field" style="width:auto;">
+                    <button onclick="agregarFechaBloqueada()" class="btn-save">+ Bloquear fecha</button>
+                </div>
+            </div>
+
+            <div class="card-admin">
+                <h3 class="font-semibold text-stone-800 mb-2">⭐ Horarios extra para una fecha específica</h3>
+                <p class="text-stone-500 text-xs mb-4">Para atender un sábado puntual o agregar horarios fuera de lo habitual.</p>
+                <div id="agenda-extras" class="space-y-2 mb-4"></div>
+                <div class="flex gap-2 flex-wrap">
+                    <input type="date" id="extra-fecha" class="input-field" style="width:auto;">
+                    <input type="time" id="extra-hora" class="input-field" style="width:auto;">
+                    <button onclick="agregarHorarioExtra()" class="btn-save">+ Agregar horario extra</button>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-6">
+                <button onclick="saveAgendaAdmin()" class="btn-save">💾 Guardar toda la agenda</button>
+                <button onclick="resetAgendaAdmin()" class="btn-reset">↺ Restaurar agenda default</button>
+            </div>
+        </div>
+
+        <!-- ======================== TAB: CARGA MANUAL ======================== -->
+        <div id="panel-manual" class="hidden pb-12">
+            <div class="mb-6">
+                <h2 class="text-2xl font-light text-stone-900">Carga Manual de Turnos</h2>
+                <p class="text-stone-500 text-sm mt-1">Registrá turnos dados por teléfono, WhatsApp, en persona o cualquier vía fuera de la web.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <!-- FORMULARIO -->
+                <div class="card-admin">
+                    <h3 class="font-semibold text-stone-800 mb-5">➕ Nuevo turno manual</h3>
+                    <div class="space-y-4">
+
+                        <div>
+                            <label class="label">Nombre completo *</label>
+                            <input type="text" id="m-nombre" class="input-field" placeholder="Nombre y apellido del paciente">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="label">Email</label>
+                                <input type="email" id="m-email" class="input-field" placeholder="correo@ejemplo.com">
+                            </div>
+                            <div>
+                                <label class="label">Teléfono</label>
+                                <input type="tel" id="m-telefono" class="input-field" placeholder="+54 9 358...">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="label">Fecha *</label>
+                                <input type="date" id="m-fecha" class="input-field">
+                            </div>
+                            <div>
+                                <label class="label">Hora *</label>
+                                <input type="time" id="m-hora" class="input-field" step="1800">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="label">Modalidad *</label>
+                            <select id="m-modalidad" class="input-field">
+                                <option value="">— Seleccioná —</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="label">Estado inicial</label>
+                            <select id="m-estado" class="input-field">
+                                <option value="confirmada" selected>✓ Confirmada</option>
+                                <option value="pendiente">⏳ Pendiente</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="label">Motivo / Notas <span class="text-stone-400 font-normal normal-case">(opcional)</span></label>
+                            <textarea id="m-motivo" class="input-field" rows="3" placeholder="Observaciones sobre el turno..."></textarea>
+                        </div>
+
+                        <div id="manual-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl"></div>
+
+                        <button onclick="agregarCitaManual()" class="btn-save w-full text-center">
+                            ➕ Agregar turno
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ÚLTIMAS CARGADAS MANUALMENTE -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-semibold text-stone-800">📋 Últimos turnos manuales</h3>
+                        <button onclick="showTab('citas')" class="text-xs text-amber-800 underline hover:text-stone-700 transition-colors">Ver todas las citas →</button>
+                    </div>
+                    <div id="manual-recientes">
+                        <p class="text-stone-400 text-sm text-center py-8">Cargando...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast">✓ Guardado correctamente</div>
+
+    <script src="data.js"></script>
+    <script src="admin.js"></script>
+    <script src="admin-citas.js"></script>
+</body>
+</html>

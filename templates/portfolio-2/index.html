@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candela González - Psicóloga Profesional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-green-50 text-green-900">
+    
+    <!-- NAVBAR MODERNO -->
+    <nav class="bg-white/95 backdrop-blur-lg border-b border-green-100/50 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- LOGO MODERNO -->
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-green-600 via-green-700 to-green-800 flex items-center justify-center shadow-lg group-hover:shadow-2xl group-hover:shadow-green-500/25 transition-all duration-300 transform group-hover:-rotate-3">
+                            <span class="text-white font-bold text-xl">C</span>
+                        </div>
+                        <!-- ELEMENTO GEOMÉTRICO DECORATIVO -->
+                        <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full opacity-80 animate-ping"></div>
+                    </div>
+                    <div class="hidden sm:block">
+                        <p class="text-sm font-bold text-green-900 group-hover:text-green-700 transition-colors">Candela González</p>
+                        <p class="text-xs text-green-500">Psicóloga Profesional</p>
+                    </div>
+                </div>
+
+                <!-- MENÚ DESKTOP MODERNO -->
+                <ul class="hidden lg:flex gap-8 text-sm font-medium">
+                    <li><a href="#inicio" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Inicio</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                    <li><a href="#sobre-mi" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Sobre mí</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                    <li><a href="#servicios" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Servicios</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                    <li><a href="#blog" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Reflexiones</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                    <li><a href="#contacto" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Contacto</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                    <li><a href="#agendar" class="relative px-4 py-2 rounded-xl text-green-600 hover:text-green-700 hover:bg-green-50 transition-all duration-300 group">
+                        <span class="relative z-10">Agendar</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-green-700/10 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                    </a></li>
+                </ul>
+
+                <!-- BOTÓN CTA MODERNO -->
+                <div class="hidden md:flex items-center gap-3">
+                    <a href="#agendar" class="bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                        Agendar Cita
+                    </a>
+                </div>
+
+                <!-- MENÚ MÓVIL MODERNO -->
+                <button class="lg:hidden text-green-700 text-2xl font-light hover:scale-110 transition-transform duration-300 hover:text-green-800 p-2">
+                    <div class="w-6 h-6 flex flex-col justify-center items-center gap-1">
+                        <div class="w-5 h-0.5 bg-current rounded-full transition-all"></div>
+                        <div class="w-5 h-0.5 bg-current rounded-full transition-all"></div>
+                        <div class="w-3 h-0.5 bg-current rounded-full transition-all"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- BARRA PROGRESO SCROLL -->
+        <div class="h-1 bg-gradient-to-r from-green-200 to-green-300">
+            <div class="h-full bg-gradient-to-r from-green-500 to-green-700 w-0 transition-all duration-300" id="scrollProgress"></div>
+        </div>
+    </nav>
+
+    <!-- HERO / HEADER PRINCIPAL - MODERNO -->
+    <header id="inicio" class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-green-50 to-green-100 min-h-screen">
+        <!-- ELEMENTOS GEOMÉTRICOS MODERNOS -->
+        <div class="absolute inset-0">
+            <div class="absolute top-20 right-10 w-32 h-32 bg-green-200 rounded-full opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-40 left-20 w-24 h-24 bg-green-300 rotate-45 opacity-30"></div>
+            <div class="absolute top-1/2 right-1/4 w-16 h-16 bg-green-400 rounded-lg opacity-25"></div>
+            <div class="absolute top-32 left-1/3 w-20 h-20 border-4 border-green-200 rotate-12 opacity-20"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 py-20 md:py-32">
+            <div class="grid lg:grid-cols-12 gap-12 items-center min-h-[80vh]">
+
+                <!-- CONTENIDO IZQUIERDA - MODERNO -->
+                <div class="lg:col-span-7 space-y-8">
+                    <!-- BADGE MODERNO -->
+                    <div class="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium border border-green-200">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span data-psico="hero_badge">Psicóloga Profesional</span>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h1 class="text-6xl md:text-7xl lg:text-8xl font-thin text-slate-900 leading-none tracking-tight">
+                            <span class="block">Candela</span>
+                            <span class="block font-light bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent">González</span>
+                        </h1>
+
+                        <p class="text-xl text-slate-600 leading-relaxed max-w-2xl" data-psico="hero_titulo">
+                            Transformando vidas a través de la psicología moderna y el acompañamiento integral.
+                        </p>
+
+                        <!-- BOTONES MODERNOS -->
+                        <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                            <a href="#agendar" class="group bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-2xl font-semibold hover:shadow-2xl hover:shadow-green-500/25 transition-all duration-300 transform hover:-translate-y-1">
+                                <span class="flex items-center gap-2">
+                                    Agendar Consulta
+                                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
+                                </span>
+                            </a>
+                            <button class="border-2 border-green-600 text-green-600 px-8 py-4 rounded-2xl font-semibold hover:bg-green-50 transition-all duration-300">
+                                Ver Servicios
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMAGEN DERECHA - MODERNA -->
+                <div class="lg:col-span-5">
+                    <div class="relative">
+                        <!-- MARCO GEOMÉTRICO MODERNO -->
+                        <div class="absolute -inset-4 bg-gradient-to-r from-green-400 to-green-500 rounded-3xl rotate-3 opacity-20"></div>
+                        <div class="absolute -inset-2 bg-gradient-to-r from-green-400 to-green-500 rounded-3xl -rotate-2 opacity-30"></div>
+
+                        <div class="relative bg-white rounded-3xl shadow-2xl p-8 overflow-hidden">
+                            <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center">
+                                <div class="relative w-full max-w-sm">
+                                    <img src="assets/images/Avatar.jpg"
+                                         alt="Candela González - Psicóloga Profesional"
+                                         class="w-full h-auto object-contain rounded-xl transition-all duration-500 hover:scale-105"
+                                         loading="eager"
+                                         decoding="async"
+                                         style="image-rendering: auto; filter: brightness(1.05) contrast(1.05) saturate(1.05); backface-visibility: hidden;">
+
+                                    <!-- ELEMENTOS DECORATIVOS -->
+                                    <div class="absolute -top-4 -right-4 w-8 h-8 bg-green-500 rounded-full opacity-20"></div>
+                                    <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-green-500 rotate-45 opacity-30"></div>
+                                </div>
+                            </div>
+
+                            <!-- BADGE PROFESIONAL -->
+                            <div class="absolute top-4 right-4 bg-white/90 backdrop-blur rounded-full px-4 py-2 shadow-lg border border-green-100">
+                                <p class="text-sm font-semibold text-green-700">MP: 15457</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SCROLL INDICATOR MODERNO -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-green-400 rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-green-400 rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </header>
+
+
+
+    <!-- SOBRE MÍ - MODERNO -->
+    <section id="sobre-mi" class="relative bg-gradient-to-br from-slate-50 via-green-50/30 to-green-50/50 py-20 md:py-32 overflow-hidden">
+        <!-- ELEMENTOS GEOMÉTRICOS DE FONDO -->
+        <div class="absolute inset-0">
+            <div class="absolute top-10 right-20 w-40 h-40 bg-green-200/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 left-10 w-32 h-32 bg-green-300/20 rotate-45 blur-2xl"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-r from-green-200/10 to-green-200/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+
+                <!-- CONTENIDO PRINCIPAL -->
+                <div class="lg:col-span-6 space-y-8">
+                    <!-- BADGE MODERNO -->
+                    <div class="inline-flex items-center gap-3 bg-gradient-to-r from-green-100 to-green-100 text-green-800 px-6 py-3 rounded-2xl text-sm font-semibold border border-green-200/50">
+                        <div class="w-3 h-3 bg-gradient-to-r from-green-500 to-green-500 rounded-full animate-pulse"></div>
+                        Mi Historia Profesional
+                        <div class="w-3 h-3 bg-gradient-to-r from-green-500 to-green-500 rounded-full animate-pulse"></div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <h2 class="text-5xl md:text-6xl font-thin text-slate-900 leading-tight">
+                            Más que una<br>
+                            <span class="font-light bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent">Psicóloga</span>
+                        </h2>
+
+                        <p class="text-xl text-slate-600 leading-relaxed">
+                            Soy Candela González, una profesional apasionada por el acompañamiento humano. Mi especialidad es guiar a mujeres extraordinarias hacia el equilibrio perfecto entre sus metas profesionales y su bienestar personal.
+                        </p>
+
+                        <!-- CITA INSPIRADORA -->
+                        <div class="relative">
+                            <div class="bg-gradient-to-r from-green-600 to-green-600 p-1 rounded-3xl">
+                                <div class="bg-white rounded-3xl p-8 shadow-xl">
+                                    <div class="text-4xl text-green-300 mb-4">"</div>
+                                    <p class="text-slate-700 text-lg italic leading-relaxed" data-psico="sobre_mi_quote">
+                                        El verdadero cambio no ocurre cuando cambiamos lo que hacemos, sino cuando cambiamos nuestro corazón y nuestra mente.
+                                    </p>
+                                    <div class="flex items-center gap-3 mt-6">
+                                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-500 rounded-full flex items-center justify-center">
+                                            <span class="text-white font-bold">C</span>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-slate-900">Candela González</p>
+                                            <p class="text-sm text-slate-500">Psicóloga Profesional</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMAGEN Y LOGROS -->
+                <div class="lg:col-span-6">
+                    <div class="relative">
+                        <!-- IMAGEN PRINCIPAL -->
+                        <div class="relative bg-white rounded-3xl shadow-2xl p-8 overflow-hidden">
+                            <div class="aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-green-50 to-green-50 flex items-center justify-center">
+                                <div class="relative w-full max-w-sm">
+                                    <img src="assets/images/about me.jpg"
+                                         alt="Candela González - Psicóloga Profesional"
+                                         class="w-full h-full object-cover rounded-xl transition-all duration-500 hover:scale-105"
+                                         loading="lazy"
+                                         decoding="async"
+                                         style="image-rendering: auto; filter: brightness(1.05) contrast(1.05) saturate(1.05); backface-visibility: hidden;">
+                                </div>
+                            </div>
+                            <!-- BADGE PROFESIONAL -->
+                            <div class="absolute top-4 right-4 bg-white/95 backdrop-blur rounded-2xl px-4 py-2 shadow-lg border border-green-100">
+                                <p class="text-sm font-bold text-green-700">MP: 15457</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CERTIFICACIONES -->
+            <div class="mt-20">
+                <h3 class="text-2xl font-semibold text-slate-900 text-center mb-12">Formación y Especialización</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-green-100/50 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl">🎓</span>
+                        </div>
+                        <h4 class="font-semibold text-slate-900 mb-2">Licenciatura en Psicología</h4>
+                        <p class="text-slate-600 text-sm">Formación académica sólida en ciencias del comportamiento humano</p>
+                    </div>
+
+                    <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-green-100/50 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl">🧠</span>
+                        </div>
+                        <h4 class="font-semibold text-slate-900 mb-2">Terapia Cognitivo-Conductual</h4>
+                        <p class="text-slate-600 text-sm">Especialización en técnicas basadas en evidencia científica</p>
+                    </div>
+
+                    <div class="bg-white/80 backdrop-blur rounded-2xl p-6 shadow-lg border border-green-100/50 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-500 to-green-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <span class="text-white text-xl">🌱</span>
+                        </div>
+                        <h4 class="font-semibold text-slate-900 mb-2">Coaching de Bienestar</h4>
+                        <p class="text-slate-600 text-sm">Acompañamiento integral para el desarrollo personal y profesional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </section>
+
+    <!-- REFLEXIONES MODERNAS -->
+    <section id="blog" class="relative bg-gradient-to-br from-slate-50 via-green-50/30 to-green-50/50 py-20 md:py-32 overflow-hidden">
+        <!-- ELEMENTOS GEOMÉTRICOS DE FONDO -->
+        <div class="absolute inset-0">
+            <div class="absolute top-10 right-20 w-32 h-32 bg-green-200/20 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-20 left-10 w-24 h-24 bg-green-300/20 rotate-45 blur-xl"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-r from-green-200/10 to-green-200/10 rounded-full blur-2xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <!-- HEADER MODERNO -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-3 bg-gradient-to-r from-green-100 to-green-100 text-green-800 px-6 py-3 rounded-2xl text-sm font-semibold border border-green-200/50 mb-6">
+                    <div class="w-3 h-3 bg-gradient-to-r from-green-500 to-green-500 rounded-full animate-pulse"></div>
+                    Reflexiones & Artículos
+                    <div class="w-3 h-3 bg-gradient-to-r from-green-500 to-green-500 rounded-full animate-pulse"></div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-thin text-slate-900 mb-6">
+                    Pensamientos<br>
+                    <span class="font-light bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent">que inspiran</span>
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed" data-psico="blog_subtitulo">
+                    Explorando la psicología moderna, el bienestar emocional y el crecimiento personal a través de reflexiones profundas y prácticas.
+                </p>
+            </div>
+
+            <!-- GRID DE ARTÍCULOS (renderizado dinámicamente por site-loader.js) -->
+            <div class="grid lg:grid-cols-2 gap-8" id="articulos-grid">
+
+                <!-- ARTÍCULO 1 -->
+                <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-green-100/50">
+                    <!-- IMAGEN CON OVERLAY MODERNO -->
+                    <div class="relative h-64 bg-gradient-to-br from-green-500 via-green-600 to-teal-700 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+                        <!-- ELEMENTOS DECORATIVOS -->
+                        <div class="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                            <span class="text-2xl">💭</span>
+                        </div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl md:text-3xl font-light text-white leading-tight max-w-xs">
+                                Libertad<br>
+                                <span class="font-normal">Auténtica</span>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">C</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">Candela González</p>
+                                <p class="text-xs text-slate-500">12 de Marzo, 2024</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Reflexión profunda sobre la importancia de ser auténtica en el mundo profesional. ¿Por qué el miedo al juzgamiento nos limita?
+                        </p>
+
+                        <!-- TAGS -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Autenticidad</span>
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-medium">Libertad</span>
+                        </div>
+
+                        <button class="group/btn bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2">
+                            <span>Leer reflexión completa</span>
+                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 2 -->
+                <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-green-100/50">
+                    <!-- IMAGEN CON OVERLAY MODERNO -->
+                    <div class="relative h-64 bg-gradient-to-br from-green-600 via-green-700 to-emerald-700 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+                        <!-- ELEMENTOS DECORATIVOS -->
+                        <div class="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                            <span class="text-2xl">🧠</span>
+                        </div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl md:text-3xl font-light text-white leading-tight max-w-xs">
+                                Estrés vs<br>
+                                <span class="font-normal">Ansiedad</span>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">C</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">Candela González</p>
+                                <p class="text-xs text-slate-500">8 de Marzo, 2024</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Guía práctica para entender las diferencias entre estrés y ansiedad, y cómo abordarlos de manera efectiva en tu vida diaria.
+                        </p>
+
+                        <!-- TAGS -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Estrés</span>
+                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">Ansiedad</span>
+                            <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-medium">Salud Mental</span>
+                        </div>
+
+                        <button class="group/btn bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2">
+                            <span>Leer artículo completo</span>
+                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 3 -->
+                <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-green-100/50">
+                    <!-- IMAGEN CON OVERLAY MODERNO -->
+                    <div class="relative h-64 bg-gradient-to-br from-green-500 via-green-600 to-teal-700 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+                        <!-- ELEMENTOS DECORATIVOS -->
+                        <div class="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                            <span class="text-2xl">🧘</span>
+                        </div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl md:text-3xl font-light text-white leading-tight max-w-xs">
+                                Mindfulness<br>
+                                <span class="font-normal">Diario</span>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-teal-500 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">C</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">Candela González</p>
+                                <p class="text-xs text-slate-500">1 de Marzo, 2024</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Cinco técnicas prácticas de mindfulness que puedes integrar fácilmente en tu rutina diaria para reducir el estrés.
+                        </p>
+
+                        <!-- TAGS -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-medium">Mindfulness</span>
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Bienestar</span>
+                        </div>
+
+                        <button class="group/btn bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2">
+                            <span>Descubrir técnicas</span>
+                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- ARTÍCULO 4 -->
+                <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-green-100/50">
+                    <!-- IMAGEN CON OVERLAY MODERNO -->
+                    <div class="relative h-64 bg-gradient-to-br from-green-600 via-green-700 to-emerald-700 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+                        <!-- ELEMENTOS DECORATIVOS -->
+                        <div class="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                            <span class="text-2xl">💪</span>
+                        </div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl md:text-3xl font-light text-white leading-tight max-w-xs">
+                                Autoexigencia<br>
+                                <span class="font-normal">Transformada</span>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- CONTENIDO -->
+                    <div class="p-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-10 h-10 bg-gradient-to-r from-green-600 to-emerald-600 rounded-full flex items-center justify-center">
+                                <span class="text-white font-bold text-sm">C</span>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">Candela González</p>
+                                <p class="text-xs text-slate-500">25 de Febrero, 2024</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            Cómo convertir la autoexigencia de enemiga en aliada. Estrategias prácticas para un crecimiento saludable.
+                        </p>
+
+                        <!-- TAGS -->
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">Autoexigencia</span>
+                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-medium">Crecimiento</span>
+                        </div>
+
+                        <button class="group/btn bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-3 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2">
+                            <span>Leer transformación</span>
+                            <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- CTA PARA NEWSLETTER -->
+            <div class="text-center mt-16">
+                <div class="bg-gradient-to-r from-green-600 to-green-700 p-1 rounded-3xl inline-block">
+                    <div class="bg-white rounded-3xl px-8 py-8 shadow-xl max-w-md">
+                        <div class="text-4xl mb-4">📬</div>
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">Recibe mis reflexiones</h3>
+                        <p class="text-slate-600 text-sm mb-6">Suscríbete para recibir artículos semanales sobre psicología y bienestar</p>
+                        <div class="flex gap-2">
+                            <input type="email" placeholder="Tu email" class="flex-1 px-4 py-2 border border-slate-300 rounded-xl text-sm focus:outline-none focus:border-green-500">
+                            <button class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+                                Suscribir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AGENDAR SESIÓN -->
+    <section id="agendar" class="relative bg-gradient-to-br from-green-600 via-green-700 to-emerald-800 py-20 md:py-28 overflow-hidden">
+        <!-- Decorativos -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-16 w-40 h-40 bg-white/5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-10 left-10 w-32 h-32 bg-white/5 rounded-3xl rotate-45 blur-2xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-2xl mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 bg-white/15 text-white px-5 py-2 rounded-2xl text-sm font-medium mb-6">
+                    <div class="w-2 h-2 bg-green-300 rounded-full animate-pulse"></div>
+                    Agenda tu primera consulta
+                </div>
+                <h2 class="text-4xl md:text-5xl font-thin text-white mb-4">Reservá tu sesión</h2>
+                <p class="text-green-100/80 text-lg">Completá el formulario y me pondré en contacto para confirmar tu cita.</p>
+            </div>
+
+            <!-- BOOKING FORM -->
+            <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10" id="booking-form-view">
+                <form id="booking-form" class="space-y-5">
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Nombre completo *</label>
+                            <input type="text" id="b-nombre" required
+                                class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                                placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Email *</label>
+                            <input type="email" id="b-email" required
+                                class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                                placeholder="tu@email.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Teléfono (opcional)</label>
+                        <input type="tel" id="b-telefono"
+                            class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors"
+                            placeholder="+54 358 ...">
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Fecha *</label>
+                            <input type="date" id="b-fecha" required
+                                class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Horario *</label>
+                            <select id="b-hora" required
+                                class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors bg-white">
+                                <option value="">-- Elegí una fecha primero --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Modalidad *</label>
+                        <select id="b-modalidad" required
+                            class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors bg-white">
+                            <option value="">-- Seleccioná modalidad --</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Motivo de consulta (opcional)</label>
+                        <textarea id="b-motivo" rows="3"
+                            class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl text-slate-800 text-sm focus:outline-none focus:border-green-500 transition-colors resize-none"
+                            placeholder="Contame brevemente sobre qué quisiera trabajar..."></textarea>
+                    </div>
+
+                    <!-- Error -->
+                    <div id="booking-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-2xl"></div>
+
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-2xl font-semibold text-sm hover:shadow-lg hover:shadow-green-500/25 transition-all duration-300 transform hover:-translate-y-0.5">
+                        ✓ Solicitar turno
+                    </button>
+                </form>
+            </div>
+
+            <!-- VISTA: CONFIRMACIÓN -->
+            <div id="booking-success-view" class="hidden flex-col items-center text-center bg-white rounded-3xl shadow-2xl p-10">
+                <div class="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center text-4xl mb-6 shadow-lg">✓</div>
+                <h3 class="text-2xl font-semibold text-slate-900 mb-2">¡Solicitud enviada!</h3>
+                <p class="text-slate-500 text-sm mb-8">Te confirmaré la cita a la brevedad. Estos son los detalles:</p>
+                <div id="booking-resumen" class="w-full bg-green-50 rounded-2xl p-6 mb-8 text-left border border-green-100"></div>
+                <button onclick="resetBookingForm()"
+                    class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-2xl font-semibold text-sm hover:shadow-lg transition-all duration-300">
+                    Hacer otra reserva
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="bg-slate-50 py-16 md:py-24">
+        <div class="max-w-2xl mx-auto px-4">
+            <h2 class="text-4xl font-light text-slate-900 mb-8 text-center">Contáctame</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Información de Contacto</h3>
+                    <div class="space-y-4 text-slate-700">
+                        <p>
+                            <strong>📧 Email:</strong><br>
+                            <a href="mailto:candela@example.com" class="text-green-600 hover:underline">candela@example.com</a>
+                        </p>
+                        <p>
+                            <strong>📱 WhatsApp:</strong><br>
+                            <a href="https://wa.me/5493544123456" class="text-green-600 hover:underline">+54 9 3544 123456</a>
+                        </p>
+                        <p>
+                            <strong>📍 Ubicación:</strong><br>
+                            Río Cuarto, Córdoba - Consultas Online
+                        </p>
+                        <p>
+                            <strong>🕐 Horarios:</strong><br>
+                            Lunes a Viernes: 9:00 - 19:00
+                        </p>
+                    </div>
+                </div>
+
+                <form class="space-y-4">
+                    <input type="text" placeholder="Tu nombre" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-green-600">
+                    <input type="email" placeholder="Tu email" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-green-600">
+                    <textarea placeholder="Tu mensaje" rows="4" class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:border-green-600"></textarea>
+                    <button type="submit" class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition">
+                        Enviar mensaje
+                    </button>
+                </form>
+            </div>
+
+            <!-- REDES SOCIALES -->
+            <div class="text-center pt-8 border-t border-slate-200">
+                <p class="text-slate-600 mb-4">Sígueme en redes sociales</p>
+                <div class="flex justify-center gap-6">
+                    <a href="#" class="text-green-600 hover:text-green-700 text-2xl">📱</a>
+                    <a href="#" class="text-green-600 hover:text-green-700 text-2xl">💼</a>
+                    <a href="#" class="text-green-600 hover:text-green-700 text-2xl">🐦</a>
+                    <a href="#" class="text-green-600 hover:text-green-700 text-2xl">📧</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-slate-800 via-green-900 to-slate-800 text-white py-12">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <p class="text-slate-300 mb-2">
+                © 2024 Candela González - Psicóloga. Todos los derechos reservados.
+            </p>
+            <p class="text-slate-400 text-sm">
+                Desarrollado con ❤️ por Teamplates Psico
+            </p>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE WHATSAPP -->
+    <a href="https://wa.me/543584397037?text=Hola%20Candela%2C%20quiero%20consultar%20sobre%20una%20sesi%C3%B3n"
+       target="_blank" rel="noopener noreferrer"
+       class="fixed bottom-6 right-6 z-50 group flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white pl-4 pr-5 py-3 rounded-full shadow-2xl shadow-green-500/40 transition-all duration-300 hover:scale-105">
+        <svg class="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span class="text-sm font-semibold">WhatsApp</span>
+    </a>
+
+    <script src="script.js"></script>
+    <script src="data.js"></script>
+    <script src="site-loader.js"></script>
+    <script src="booking.js"></script>
+
+</body>
+</html>
