@@ -8,7 +8,7 @@
 // =============================================
 function showTab(tab) {
     // Ocultar todos los paneles
-    ['articulos','frases','citas','agenda','manual'].forEach(t => {
+    ['articulos','frases','citas','agenda','manual','resenas'].forEach(t => {
         const panel = document.getElementById('panel-' + t);
         if (panel) panel.classList.add('hidden');
     });
@@ -27,6 +27,7 @@ function showTab(tab) {
     // Refrescar al abrir cada tab
     if (tab === 'citas') renderCitas();
     if (tab === 'manual') initManualTab();
+    if (tab === 'resenas') initResenasTab();
 }
 
 // =============================================

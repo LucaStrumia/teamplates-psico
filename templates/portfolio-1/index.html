@@ -491,6 +491,60 @@
         </div>
     </section>
 
+    <!-- RESEÑAS ANÓNIMAS -->
+    <section id="resenas" class="py-20 md:py-28 bg-gradient-to-br from-stone-100 to-amber-50/60">
+        <div class="max-w-6xl mx-auto px-4">
+            <!-- Título -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 bg-white/70 backdrop-blur text-amber-900 px-5 py-2.5 rounded-full text-sm font-semibold border border-amber-300/60 shadow-sm mb-6">
+                    <span>⭐</span> Testimonios
+                </div>
+                <h2 class="text-4xl md:text-5xl font-light text-stone-900 mb-4">Lo que dicen mis <span class="font-normal text-amber-800">pacientes</span></h2>
+                <p class="text-stone-500 max-w-xl mx-auto text-sm">Experiencias reales compartidas de forma anónima por quienes confiaron en el proceso terapéutico.</p>
+            </div>
+
+            <!-- Grid de reseñas aprobadas -->
+            <div id="resenas-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+                <p class="text-stone-400 text-sm col-span-full text-center py-10" id="resenas-empty">Sé la primera persona en compartir tu experiencia.</p>
+            </div>
+
+            <!-- Formulario de reseña -->
+            <div class="max-w-xl mx-auto bg-white rounded-3xl shadow-xl p-8 border border-amber-200/40">
+                <h3 class="text-xl font-semibold text-stone-900 mb-1">Compartí tu experiencia</h3>
+                <p class="text-stone-400 text-xs mb-6">Anónimo · Solo se publica si es aprobado por la psicóloga</p>
+
+                <!-- Estrellas -->
+                <div class="mb-5">
+                    <p class="text-sm font-semibold text-stone-700 mb-2">Tu calificación</p>
+                    <div class="flex gap-1" id="star-rating-resena">
+                        <button type="button" onclick="setStarsResena(1)" class="star-resena-btn text-3xl text-stone-300 hover:text-yellow-400 transition-colors leading-none" data-star="1">★</button>
+                        <button type="button" onclick="setStarsResena(2)" class="star-resena-btn text-3xl text-stone-300 hover:text-yellow-400 transition-colors leading-none" data-star="2">★</button>
+                        <button type="button" onclick="setStarsResena(3)" class="star-resena-btn text-3xl text-stone-300 hover:text-yellow-400 transition-colors leading-none" data-star="3">★</button>
+                        <button type="button" onclick="setStarsResena(4)" class="star-resena-btn text-3xl text-stone-300 hover:text-yellow-400 transition-colors leading-none" data-star="4">★</button>
+                        <button type="button" onclick="setStarsResena(5)" class="star-resena-btn text-3xl text-yellow-400 hover:text-yellow-400 transition-colors leading-none" data-star="5">★</button>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-stone-700 mb-1.5">Tu reseña <span class="text-red-400">*</span></label>
+                    <textarea id="resena-texto" rows="3" maxlength="500" placeholder="Contá tu experiencia en pocas palabras..."
+                        class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-100 resize-none"></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold text-stone-700 mb-1.5">Nombre o apodo <span class="text-stone-400 font-normal">(opcional)</span></label>
+                    <input type="text" id="resena-apodo" maxlength="40" placeholder="Ej: María G., o dejalo en blanco para ser anónimo/a"
+                        class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-100">
+                </div>
+
+                <button onclick="enviarResena()" class="w-full bg-gradient-to-r from-stone-700 to-amber-800 text-white py-3.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-amber-700/30 transition-all duration-300 hover:-translate-y-0.5">
+                    Enviar reseña
+                </button>
+                <p id="resena-mensaje" class="text-center text-sm mt-3 hidden"></p>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white py-12">
         <div class="max-w-7xl mx-auto px-4">
@@ -537,7 +591,37 @@
     <script src="data.js"></script>
     <script src="script.js"></script>
     <script src="site-loader.js"></script>
+    <script>
+        // === RESEÑAS ===
+        var _selectedStars = 5;
+        function setStarsResena(n) {
+            _selectedStars = n;
+            document.querySelectorAll('.star-resena-btn').forEach(function(btn) {
+                var s = parseInt(btn.getAttribute('data-star'));
+                btn.classList.toggle('text-yellow-400', s <= n);
+                btn.classList.toggle('text-stone-300', s > n);
+            });
+        }
+        function enviarResena() {
+            var texto = document.getElementById('resena-texto').value.trim();
+            var apodo = document.getElementById('resena-apodo').value.trim();
+            var msg = document.getElementById('resena-mensaje');
+            if (!texto) {
+                msg.textContent = 'Por favor escribí tu reseña antes de enviar.';
+                msg.className = 'text-center text-sm mt-3 text-red-500';
+                msg.classList.remove('hidden');
+                return;
+            }
+            agregarResena({ texto: texto, estrellas: _selectedStars, apodo: apodo || 'Anónimo' });
+            document.getElementById('resena-texto').value = '';
+            document.getElementById('resena-apodo').value = '';
+            setStarsResena(5);
+            msg.textContent = '¡Gracias! Tu reseña fue recibida y se publicará una vez aprobada.';
+            msg.className = 'text-center text-sm mt-3 text-green-600';
+            msg.classList.remove('hidden');
+            setTimeout(function() { msg.classList.add('hidden'); }, 6000);
+        }
+    </script>
 
 </body>
 </html>
-

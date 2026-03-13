@@ -93,6 +93,10 @@
                 class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-green-800 hover:text-green-900">
                 ✏️ Carga Manual
             </button>
+            <button onclick="showTab('resenas')" id="tab-resenas"
+                class="tab-btn px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-green-800 hover:text-green-900">
+                ⭐ Reseñas <span id="badge-resenas-pendientes" class="ml-1 bg-green-600 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+            </button>
         </div>
 
         <!-- ======================== TAB: ARTÍCULOS ======================== -->
@@ -338,8 +342,34 @@
     <!-- TOAST -->
     <div id="toast" class="toast">✓ Guardado correctamente</div>
 
+    <!-- ======================== TAB: RESEÑAS ======================== -->
+    <div id="panel-resenas" class="hidden max-w-5xl mx-auto px-4 pb-12">
+        <div class="flex items-center justify-between mb-6 pt-2">
+            <div>
+                <h2 class="text-2xl font-light text-green-900">Reseñas de Pacientes</h2>
+                <p class="text-green-600 text-sm mt-1">Revisá y aprobá las reseñas anónimas enviadas desde el sitio</p>
+            </div>
+            <button onclick="initResenasTab()" class="btn-save">🔄 Actualizar</button>
+        </div>
+
+        <!-- Pendientes -->
+        <div class="card-admin mb-6">
+            <h3 class="font-semibold text-green-900 mb-4 flex items-center gap-2">
+                ⏳ Pendientes de aprobación
+            </h3>
+            <div id="resenas-pendientes"></div>
+        </div>
+
+        <!-- Aprobadas -->
+        <div class="card-admin">
+            <h3 class="font-semibold text-green-900 mb-4">✅ Reseñas publicadas</h3>
+            <div id="resenas-aprobadas"></div>
+        </div>
+    </div>
+
     <script src="data.js"></script>
     <script src="admin.js"></script>
     <script src="admin-citas.js"></script>
+    <script src="admin-resenas.js"></script>
 </body>
 </html>

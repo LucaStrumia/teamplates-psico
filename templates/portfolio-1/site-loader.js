@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const db = getDB(); // función definida en data.js
     loadFrases(db.frases);
     renderArticulosGrid(db.articulos);
+    renderResenas();
 });
 
 // =============================================
@@ -80,4 +81,40 @@ function splitTitulo(titulo) {
     const idx = titulo.indexOf(' ');
     if (idx === -1) return [titulo, ''];
     return [titulo.substring(0, idx), titulo.substring(idx + 1)];
+}
+
+// =============================================
+// RENDERIZAR RESEÑAS
+// =============================================
+function renderResenas() {
+    const grid = document.getElementById('resenas-grid');
+    if (!grid) return;
+    const aprobadas = getResenas().filter(r => r.aprobada);
+    const empty = document.getElementById('resenas-empty');
+    if (aprobadas.length === 0) {
+        if (empty) empty.classList.remove('hidden');
+        return;
+    }
+    if (empty) empty.classList.add('hidden');
+    grid.innerHTML = aprobadas.reverse().map(r => `
+        <div class="bg-white rounded-2xl p-6 shadow-md border border-stone-100 hover:shadow-lg transition-all duration-300">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-yellow-400 text-lg tracking-tight">${'\u2605'.repeat(r.estrellas)}${'\u2606'.repeat(5 - r.estrellas)}</span>
+            </div>
+            <p class="text-stone-700 text-sm leading-relaxed mb-4 italic">&#8220;${escapeHtmlSafe(r.texto)}&#8221;</p>
+            <div class="flex items-center gap-2 pt-3 border-t border-stone-100">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-stone-400 to-stone-600 flex items-center justify-center text-white font-bold text-xs flex-shrink-0">${escapeHtmlSafe(r.apodo.charAt(0).toUpperCase())}</div>
+                <div>
+                    <p class="text-xs font-semibold text-stone-800">${escapeHtmlSafe(r.apodo)}</p>
+                    <p class="text-xs text-stone-400">${escapeHtmlSafe(r.fecha)}</p>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function escapeHtmlSafe(str) {
+    const div = document.createElement('div');
+    div.textContent = String(str);
+    return div.innerHTML;
 }

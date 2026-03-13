@@ -271,3 +271,45 @@ function resetDB() {
     localStorage.removeItem(DB_KEY);
     return JSON.parse(JSON.stringify(DEFAULT_DATA));
 }
+
+// =============================================
+// HELPERS: RESEÑAS ANÓNIMAS
+// =============================================
+const RESENAS_KEY = 'psico_resenas';
+
+function getResenas() {
+    try {
+        const stored = localStorage.getItem(RESENAS_KEY);
+        if (stored) return JSON.parse(stored);
+    } catch(e) {}
+    return [];
+}
+function saveResenas(resenas) {
+    try { localStorage.setItem(RESENAS_KEY, JSON.stringify(resenas)); return true; }
+    catch(e) { console.error('Error guardando reseñas:', e); return false; }
+}
+function agregarResena(datos) {
+    const resenas = getResenas();
+    const nueva = {
+        id: Date.now(),
+        texto: datos.texto,
+        estrellas: datos.estrellas || 5,
+        apodo: datos.apodo || 'Anónimo',
+        fecha: new Date().toLocaleDateString('es-AR', { year: 'numeric', month: 'long', day: 'numeric' }),
+        aprobada: false,
+        creadaEn: new Date().toISOString()
+    };
+    resenas.push(nueva);
+    saveResenas(resenas);
+    return nueva;
+}
+function aprobarResena(id) {
+    const resenas = getResenas();
+    const idx = resenas.findIndex(r => r.id === id);
+    if (idx !== -1) { resenas[idx].aprobada = true; saveResenas(resenas); return true; }
+    return false;
+}
+function eliminarResena(id) {
+    const resenas = getResenas().filter(r => r.id !== id);
+    saveResenas(resenas);
+}
