@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates Psicología - Demos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: #fdf8f3;
+            color: #3d2b1f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        header h1 {
+            font-size: 2.2rem;
+            color: #7c4a1e;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1rem;
+            color: #8a7060;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 960px;
+            width: 100%;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #e8d9cc;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(124,74,30,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 32px rgba(124,74,30,0.16);
+        }
+        .card-header {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .p1 .card-header { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+        .p2 .card-header { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+        .p3 .card-header { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+        .card-body {
+            padding: 24px;
+            flex: 1;
+        }
+        .card-body h2 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+            color: #3d2b1f;
+        }
+        .card-body p {
+            font-size: 0.875rem;
+            color: #8a7060;
+            line-height: 1.5;
+        }
+        .card-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #f0e5da;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .btn {
+            background: #7c4a1e;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: #5a3412; }
+        footer {
+            margin-top: 60px;
+            font-size: 0.8rem;
+            color: #b0978a;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Templates Psicología</h1>
+        <p>Seleccioná un diseño para ver la demo completa</p>
+    </header>
+
+    <div class="grid">
+        <a class="card p1" href="templates/portfolio-1/index.html">
+            <div class="card-header">🌿</div>
+            <div class="card-body">
+                <h2>Portfolio 1 — Cálido / Terracota</h2>
+                <p>Diseño con tonos ámbar y piedra. Estilo cálido y profesional.</p>
+            </div>
+            <div class="card-footer">
+                <span class="btn">Ver demo →</span>
+            </div>
+        </a>
+
+        <a class="card p2" href="templates/portfolio-2/index.html">
+            <div class="card-header">💙</div>
+            <div class="card-body">
+                <h2>Portfolio 2 — Moderno / Azul</h2>
+                <p>Diseño limpio con tonos fríos. Estilo contemporáneo y minimalista.</p>
+            </div>
+            <div class="card-footer">
+                <span class="btn">Ver demo →</span>
+            </div>
+        </a>
+
+        <a class="card p3" href="templates/portfolio-3/index.html">
+            <div class="card-header">🌸</div>
+            <div class="card-body">
+                <h2>Portfolio 3 — Suave / Rosa</h2>
+                <p>Diseño delicado con tonos rosados. Estilo elegante y femenino.</p>
+            </div>
+            <div class="card-footer">
+                <span class="btn">Ver demo →</span>
+            </div>
+        </a>
+    </div>
+
+    <footer>© 2026 Templates Psico</footer>
+</body>
+</html>
