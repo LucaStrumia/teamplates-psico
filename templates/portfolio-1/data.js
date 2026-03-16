@@ -29,7 +29,7 @@ const DEFAULT_AGENDA = {
     // Duración de sesión en minutos (solo informativo)
     duracion: 50,
     // Modalidades disponibles
-    modalidades: ["Presencial", "Online (videollamada)", "Híbrida"]
+    modalidades: ["Online", "Presencial"]
 };
 
 // =============================================
@@ -68,8 +68,9 @@ function crearCita(datos) {
         nombre: datos.nombre,
         email: datos.email,
         telefono: datos.telefono || '',
-        fecha: datos.fecha,         // YYYY-MM-DD
-        hora: datos.hora,           // HH:MM
+        fecha: datos.fecha || '',   // YYYY-MM-DD
+        hora: datos.hora || '',     // HH:MM
+        disponibilidad: datos.disponibilidad || '',
         modalidad: datos.modalidad,
         motivo: datos.motivo || '',
         estado: 'pendiente',        // pendiente | confirmada | cancelada
@@ -146,10 +147,10 @@ const DEFAULT_DATA = {
     // === FRASES DE LA PÁGINA ===
     frases: {
         hero_badge: "Psicología y Bienestar",
-        hero_titulo: "Acompañamiento integral para mujeres que buscan vivir con autenticidad, equilibrio y propósito.",
-        sobre_mi_quote: "Creo que el verdadero éxito no es solo lograr metas profesionales, sino hacerlo de una manera que nos permita disfrutar del camino.",
+        hero_titulo: "Acompaño a personas que quieren dejar de sentirse sus propios enemigos y vivir una vida consciente.",
+        sobre_mi_quote: "",
         blog_subtitulo: "Explorando la psicología moderna, el bienestar emocional y el crecimiento personal a través de reflexiones profundas.",
-        enfoque_subtitulo: "Trabajo con un enfoque holístico que integra técnicas modernas con una escucha profunda y empática."
+        enfoque_subtitulo: "Trabajo desde la Terapia Gestáltica, un enfoque holístico explorando la psicología moderna, el bienestar emocional y el crecimiento personal a través de reflexiones profundas."
     },
 
     // === ARTÍCULOS / REFLEXIONES ===
@@ -241,8 +242,9 @@ function getDB() {
         const stored = localStorage.getItem(DB_KEY);
         if (stored) {
             const parsed = JSON.parse(stored);
+            // Siempre usar frases de DEFAULT_DATA para mantener actualizadas
+            parsed.frases = DEFAULT_DATA.frases;
             if (!parsed.articulos || parsed.articulos.length === 0) parsed.articulos = DEFAULT_DATA.articulos;
-            if (!parsed.frases) parsed.frases = DEFAULT_DATA.frases;
             return parsed;
         }
     } catch (e) {

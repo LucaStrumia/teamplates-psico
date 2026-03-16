@@ -61,7 +61,10 @@ function renderCitas(filtro) {
     const sorted = [...citas].sort((a, b) => new Date(b.creadaEn) - new Date(a.creadaEn));
 
     container.innerHTML = sorted.map(cita => {
-        const fechaLegible = formatFecha(cita.fecha);
+        const tieneFechaYHora = Boolean(cita.fecha && cita.hora);
+        const fechaLegible = tieneFechaYHora ? formatFecha(cita.fecha) : 'A coordinar';
+        const horarioLegible = tieneFechaYHora ? `${cita.hora} hs` : 'A coordinar';
+        const disponibilidad = cita.disponibilidad ? cita.disponibilidad : 'No especificada';
         const creadaEn = new Date(cita.creadaEn).toLocaleDateString('es-AR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
         const esPendiente  = cita.estado === 'pendiente';
         const esConfirmada = cita.estado === 'confirmada';
@@ -81,9 +84,13 @@ function renderCitas(filtro) {
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-xs text-stone-600">
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Fecha</p><p class="font-semibold text-stone-800">${fechaLegible}</p></div>
-                <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Horario</p><p class="font-semibold text-stone-800">${cita.hora} hs</p></div>
+                <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Horario</p><p class="font-semibold text-stone-800">${horarioLegible}</p></div>
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Modalidad</p><p class="font-semibold text-stone-800">${cita.modalidad}</p></div>
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Solicitud</p><p class="text-stone-600">${creadaEn}</p></div>
+            </div>
+
+            <div class="mt-3 bg-amber-50 rounded-xl px-4 py-2.5 text-xs text-stone-700 border border-amber-100">
+                <span class="font-semibold text-stone-700">Disponibilidad:</span> ${disponibilidad}
             </div>
 
             ${cita.motivo ? `<div class="mt-3 bg-stone-50 rounded-xl px-4 py-2.5 text-xs text-stone-600 border border-stone-100">

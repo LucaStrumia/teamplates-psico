@@ -302,9 +302,9 @@ function isValidEmail(email) {
 
 const socialLinks = {
     instagram: 'https://www.instagram.com/psic.cande/',
-    whatsapp: 'https://wa.me/543584397037',
-    email: 'mailto:candela@example.com',
-    linkedin: 'https://linkedin.com/in/candela-gonzalez'
+    whatsapp: 'https://wa.me/543584282005',
+    email: 'mailto:licgonzalezcandela@gmail.com',
+    tiktok: 'https://www.tiktok.com/@lic.cande.psico'
 };
 
 document.querySelectorAll('a[href="#"]').forEach((link, index) => {
@@ -410,5 +410,5 @@ if ('IntersectionObserver' in window) {
 // INICIALIZACIÓN
 // =============================================
 
-console.log('✔ Portfolio Candela cargado con animaciones suaves');
+console.log('Portfolio Candela cargado con animaciones suaves');
 
