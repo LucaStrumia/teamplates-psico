@@ -6,7 +6,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const db = getDB(); // función definida en data.js
     loadFrases(db.frases);
-    renderArticulosGrid(db.articulos);
+    const articulos = db.articulos.slice(-4).reverse(); // Últimos 4, nuevos primero
+    renderArticulosGrid(articulos);
     renderResenas();
 });
 
@@ -36,10 +37,8 @@ function renderArticulosGrid(articulos) {
         return `
         <article class="group relative bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer border border-stone-200/50">
             <div class="relative h-64 bg-gradient-to-br ${art.color_desde} ${art.color_via} ${art.color_hasta} overflow-hidden">
+                ${art.imagen_portada ? `<img src="${art.imagen_portada}" alt="${art.titulo}" class="w-full h-full object-cover">` : ''}
                 <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
-                <div class="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
-                    <span class="text-2xl">${art.emoji}</span>
-                </div>
                 <div class="absolute bottom-6 left-6">
                     <h3 class="text-2xl md:text-3xl font-light text-white leading-tight">
                         ${tituloPartes[0]}<br><span class="font-normal">${tituloPartes[1] || ''}</span>
@@ -52,7 +51,7 @@ function renderArticulosGrid(articulos) {
                         <span class="text-white font-bold text-xs">C</span>
                     </div>
                     <div>
-                        <p class="text-sm font-semibold text-slate-900">Candela González</p>
+                        <p class="text-sm font-semibold text-slate-900">Candela Gonzalez</p>
                         <p class="text-xs text-slate-400">${art.fecha}</p>
                     </div>
                 </div>
@@ -61,12 +60,12 @@ function renderArticulosGrid(articulos) {
                     <span class="${art.color_tag1_bg} ${art.color_tag1_text} px-3 py-1 rounded-full text-xs font-medium">${art.tag1}</span>
                     <span class="${art.color_tag2_bg} ${art.color_tag2_text} px-3 py-1 rounded-full text-xs font-medium">${art.tag2}</span>
                 </div>
-                <button class="group/btn bg-gradient-to-r ${art.color_boton} text-white px-5 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center gap-2 text-sm">
+                <a href="article.html?id=${art.id}" class="group/btn inline-flex items-center gap-2 bg-gradient-to-r ${art.color_boton} text-white px-5 py-2.5 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 text-sm">
                     ${art.boton_texto}
                     <svg class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                     </svg>
-                </button>
+                </a>
             </div>
         </article>`;
     }).join('');

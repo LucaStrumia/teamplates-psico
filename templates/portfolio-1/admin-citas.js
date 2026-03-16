@@ -71,22 +71,30 @@ function renderCitas(filtro) {
 
         return `
         <div class="cita-card ${cita.estado}" id="cita-${cita.id}">
-            <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div class="flex items-start justify-between gap-4 flex-wrap mb-4">
                 <div class="flex items-start gap-3">
                     <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center text-lg shrink-0">👤</div>
                     <div>
                         <p class="font-semibold text-stone-900 text-sm">${cita.nombre}</p>
-                        <p class="text-xs text-stone-400">${cita.email}${cita.telefono ? ' · ' + cita.telefono : ''}</p>
+                        <p class="text-xs text-stone-400">Solicitud: ${creadaEn}</p>
                     </div>
                 </div>
                 <span class="badge-estado badge-${cita.estado}">${cita.estado}</span>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-xs text-stone-600">
+            <!-- DATOS DE CONTACTO DEL USUARIO -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg px-3 py-2.5 mb-3 text-xs">
+                <p class="font-semibold text-blue-900 mb-2">📞 Datos de Contacto:</p>
+                <div class="space-y-1 text-stone-700">
+                    ${cita.email ? `<p><span class="font-medium">Email:</span> ${cita.email}</p>` : ''}
+                    ${cita.telefono ? `<p><span class="font-medium">Teléfono:</span> ${cita.telefono}</p>` : ''}
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 text-xs text-stone-600">
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Fecha</p><p class="font-semibold text-stone-800">${fechaLegible}</p></div>
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Horario</p><p class="font-semibold text-stone-800">${horarioLegible}</p></div>
                 <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Modalidad</p><p class="font-semibold text-stone-800">${cita.modalidad}</p></div>
-                <div><p class="text-stone-400 font-medium uppercase tracking-wide text-[10px] mb-0.5">Solicitud</p><p class="text-stone-600">${creadaEn}</p></div>
             </div>
 
             <div class="mt-3 bg-amber-50 rounded-xl px-4 py-2.5 text-xs text-stone-700 border border-amber-100">

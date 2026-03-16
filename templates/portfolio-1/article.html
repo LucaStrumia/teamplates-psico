@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artículo - Candela Gonzalez</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-amber-50 text-stone-800">
+    
+    <!-- NAVBAR -->
+    <nav class="bg-amber-50/95 backdrop-blur-lg border-b border-amber-200/70 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3 group cursor-pointer">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-stone-700 via-amber-800 to-stone-900 flex items-center justify-center shadow-lg group-hover:shadow-xl group-hover:shadow-amber-700/30 transition-all duration-300 transform group-hover:-rotate-3">
+                            <span class="text-white font-bold text-xl">C</span>
+                        </div>
+                        <div class="absolute -top-1 -right-1 w-3 h-3 bg-amber-700 rounded-full opacity-70"></div>
+                    </div>
+                    <a href="index.html" class="hidden sm:block">
+                        <p class="text-sm font-bold text-stone-900 group-hover:text-amber-800 transition-colors">Candela Gonzalez</p>
+                        <p class="text-xs text-stone-500">Psicóloga Profesional</p>
+                    </a>
+                </div>
+
+                <!-- BOTÓN CTA -->
+                <div class="flex items-center gap-3">
+                    <a href="index.html#contacto" class="bg-gradient-to-r from-stone-700 to-amber-800 text-white px-6 py-2.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-amber-700/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                        Agendar Cita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ARTÍCULO -->
+    <main class="relative max-w-4xl mx-auto px-4 py-20">
+        
+        <!-- HEADER DEL ARTÍCULO -->
+        <article id="articulo-contenedor" class="space-y-8">
+            
+            <!-- Será renderizado por JavaScript -->
+
+        </article>
+
+        <!-- BOTÓN VOLVER -->
+        <div class="mt-16 pt-8 border-t border-amber-200/60 text-center">
+            <a href="index.html#blog" class="inline-flex items-center gap-2 text-amber-800 hover:text-stone-700 font-medium transition-colors">
+                <span>←</span> Volver a Reflexiones
+            </a>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-stone-900 via-amber-950 to-stone-900 text-white py-12 mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-700 to-stone-700 flex items-center justify-center">
+                        <span class="text-white font-bold">C</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-white text-sm">Candela Gonzalez</p>
+                        <p class="text-amber-400/80 text-xs">Psicóloga Profesional</p>
+                    </div>
+                </div>
+                <p class="text-stone-400 text-sm text-center">
+                    © 2024 Candela Gonzalez - Psicóloga. Todos los derechos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script>
+        // Obtener ID del artículo desde URL
+        const params = new URLSearchParams(window.location.search);
+        const articuloId = parseInt(params.get('id'));
+
+        if (!articuloId) {
+            document.getElementById('articulo-contenedor').innerHTML = '<p class="text-center text-red-600 py-20">Artículo no encontrado.</p>';
+        } else {
+            const db = getDB();
+            const articulo = db.articulos.find(a => a.id === articuloId);
+
+            if (!articulo) {
+                document.getElementById('articulo-contenedor').innerHTML = '<p class="text-center text-red-600 py-20">Artículo no encontrado.</p>';
+            } else {
+                // Renderizar artículo
+                const html = `
+                    <!-- HEADER CON IMAGEN O COLOR -->
+                    <div class="relative h-72 bg-gradient-to-br ${articulo.color_desde} ${articulo.color_via} ${articulo.color_hasta} rounded-3xl overflow-hidden mb-8 shadow-xl">
+                        ${articulo.imagen_portada ? `<img src="${articulo.imagen_portada}" alt="${articulo.titulo}" class="w-full h-full object-cover">` : ''}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-8">
+                            <h1 class="text-4xl md:text-5xl font-light text-white leading-tight">${articulo.titulo}</h1>
+                        </div>
+                    </div>
+
+                    <!-- AUTOR Y FECHA -->
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-12 h-12 bg-gradient-to-r ${articulo.color_avatar} rounded-full flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">C</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-stone-900">Candela Gonzalez</p>
+                            <p class="text-sm text-stone-500">${articulo.fecha}</p>
+                        </div>
+                    </div>
+
+                    <!-- TAGS -->
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="${articulo.color_tag1_bg} ${articulo.color_tag1_text} px-3 py-1 rounded-full text-xs font-medium">${articulo.tag1}</span>
+                        <span class="${articulo.color_tag2_bg} ${articulo.color_tag2_text} px-3 py-1 rounded-full text-xs font-medium">${articulo.tag2}</span>
+                    </div>
+
+                    <!-- IMAGEN (si existe) -->
+                    ${articulo.imagen ? `
+                        <div class="mb-8 rounded-2xl overflow-hidden shadow-lg">
+                            <img src="${articulo.imagen}" alt="${articulo.titulo}" class="w-full h-auto object-cover">
+                        </div>
+                    ` : ''}
+
+                    <!-- CONTENIDO -->
+                    <div class="prose prose-sm max-w-none text-stone-700 leading-relaxed space-y-5 mb-8">
+                        <p>${articulo.descripcion}</p>
+                        ${articulo.contenido ? `<div>${articulo.contenido}</div>` : ''}
+                    </div>
+
+                    <!-- VIDEO (si existe) -->
+                    ${articulo.video ? `
+                        <div class="mb-8 rounded-2xl overflow-hidden shadow-lg">
+                            <iframe width="100%" height="400" src="${articulo.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    ` : ''}
+                `;
+
+                document.getElementById('articulo-contenedor').innerHTML = html;
+                document.title = articulo.titulo + ' - Candela Gonzalez';
+            }
+        }
+    </script>
+</body>
+</html>

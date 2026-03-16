@@ -45,6 +45,9 @@ function onSubmitBooking(e) {
     // Guardar cita
     const cita = crearCita({ nombre, email, telefono, disponibilidad, modalidad, motivo });
 
+    // Enviar notificación por email
+    enviarNotificacionCita(nombre, email, disponibilidad, modalidad);
+
     // Mostrar confirmacion
     showBookingSuccess(cita);
 }
@@ -82,4 +85,24 @@ function showBookingError(msg) {
 function hideBookingError() {
     const el = document.getElementById('booking-error');
     if (el) el.classList.add('hidden');
+}
+
+function enviarNotificacionCita(nombre, email, disponibilidad, modalidad) {
+    // URL del backend - Detección automática: localhost (dev) o producción
+    const backendURL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3000'
+        : 'https://tu-backend-produccion.com'; // ← REEMPLAZA CON TU URL DE BACKEND
+    
+    fetch(`${backendURL}/api/notify/cita`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            nombre: nombre,
+            email: email,
+            disponibilidad: disponibilidad,
+            modalidad: modalidad
+        })
+    }).then(res => res.json())
+      .then(data => console.log('✓ Notificación enviada', data))
+      .catch(err => console.log('Notificación en cola (sin internet)'));
 }

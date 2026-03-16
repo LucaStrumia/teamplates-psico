@@ -29,7 +29,6 @@
         .toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #16a34a; color: white; padding: 0.75rem 1.5rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.875rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15); z-index: 9999; opacity: 0; transform: translateY(1rem); transition: all 0.3s; }
         .toast.show { opacity: 1; transform: translateY(0); }
         .toast.error { background: #dc2626; }
-        .emoji-preview { font-size: 2.5rem; background: rgba(146,64,14,0.08); border-radius: 1rem; padding: 0.5rem 0.75rem; display: inline-block; line-height: 1; }
         .section-divider { height: 1px; background: linear-gradient(to right, transparent, #d6cfc4, transparent); margin: 2rem 0; }
         .filtro-btn.active { background: #92400e; color: white; border-color: #92400e; }
         .badge-estado { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -100,23 +99,126 @@
         </div>
 
         <!-- ======================== TAB: ARTÍCULOS ======================== -->
-        <div id="panel-articulos">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h2 class="text-2xl font-light text-stone-900">Artículos & Reflexiones</h2>
-                    <p class="text-stone-500 text-sm mt-1">Editá el contenido de cada card que aparece en la sección "Reflexiones"</p>
+        <div id="panel-articulos" class="space-y-12 pb-12">
+            
+            <!-- TÍTULO GENERAL -->
+            <div>
+                <h2 class="text-3xl font-light text-stone-900 mb-2">Artículos & Reflexiones</h2>
+                <p class="text-stone-600">Crea nuevos artículos o edita los existentes</p>
+            </div>
+
+            <!-- ========== SECCIÓN 1: CREAR NUEVO ARTÍCULO ========== -->
+            <div class="border-2 border-amber-300/40 rounded-2xl p-8 bg-amber-50/30">
+                <div class="flex items-center gap-3 mb-8">
+                    <span style="font-size:2rem;">➕</span>
+                    <div>
+                        <h3 class="font-semibold text-stone-900 text-xl">Crear Nuevo Artículo</h3>
+                        <p class="text-stone-600 text-sm">Llena los campos y haz clic en crear</p>
+                    </div>
                 </div>
-                <button onclick="saveArticulos()" class="btn-save">💾 Guardar cambios</button>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="md:col-span-2">
+                        <label class="label">Color del encabezado</label>
+                        <select id="nuevo-color" class="input-field">
+                            <option value="0">🌿 Verde</option>
+                            <option value="1">💙 Azul</option>
+                            <option value="2">🟠 Ámbar</option>
+                            <option value="3">🌹 Rosa</option>
+                            <option value="4">🌸 Violeta</option>
+                            <option value="5">🍂 Tierra</option>
+                            <option value="6">🔴 Rojo</option>
+                            <option value="7">🌊 Teal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label">Fecha de publicación</label>
+                        <input type="text" id="nuevo-fecha" class="input-field" placeholder="16 de Marzo, 2026">
+                    </div>
+                </div>
+
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <label class="label">Título del artículo *</label>
+                        <input type="text" id="nuevo-titulo" class="input-field text-lg" placeholder="Ej: Libertad Auténtica">
+                    </div>
+                    <div>
+                        <label class="label">Descripción corta (para la card) *</label>
+                        <textarea id="nuevo-descripcion" class="input-field" rows="3" placeholder="Descripción breve que aparecerá en la card..."></textarea>
+                    </div>
+                    <div>
+                        <label class="label">Contenido completo (artículo)</label>
+                        <textarea id="nuevo-contenido" class="input-field" rows="5" placeholder="El artículo completo que verán al hacer clic..."></textarea>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div>
+                        <label class="label">Etiqueta 1</label>
+                        <input type="text" id="nuevo-tag1" class="input-field" placeholder="Ej: Bienestar">
+                    </div>
+                    <div>
+                        <label class="label">Etiqueta 2</label>
+                        <input type="text" id="nuevo-tag2" class="input-field" placeholder="Ej: Psicología">
+                    </div>
+                    <div>
+                        <label class="label">Texto del botón</label>
+                        <input type="text" id="nuevo-boton" class="input-field" value="Leer más">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label class="label">Imagen de PORTADA (para cards)</label>
+                        <input type="file" id="nuevo-imagen-portada-file" class="input-field" accept="image/*" 
+                            onchange="handleImagenSelect('nuevo', 'portada', event)">
+                        <p class="text-xs text-stone-500 mt-2">Aparecerá en el card del blog. Si no hay, usa color verde.</p>
+                    </div>
+                    <div>
+                        <label class="label">Imagen DENTRO del artículo</label>
+                        <input type="file" id="nuevo-imagen-file" class="input-field" accept="image/*" 
+                            onchange="handleImagenSelect('nuevo', 'contenido', event)">
+                        <p class="text-xs text-stone-500 mt-2">Se mostrará dentro del artículo completo</p>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label">Video del artículo (archivo)</label>
+                    <input type="file" id="nuevo-video-file" class="input-field" accept="video/*" 
+                        onchange="handleVideoSelect('nuevo', event)">
+                    <p class="text-xs text-stone-500 mt-2">Se mostrará en la página del artículo</p>
+                </div>
+
+                <button onclick="crearArticulo()" class="btn-save w-full py-4 text-lg font-semibold">➕ Crear Artículo Nuevo</button>
             </div>
 
-            <div id="articulos-container">
-                <!-- Se renderiza por JS -->
+            <!-- ========== SECCIÓN 2: EDITAR ARTÍCULOS EXISTENTES ========== -->
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <span style="font-size:2rem;">✏️</span>
+                    <div>
+                        <h3 class="font-semibold text-stone-900 text-xl">Editar Artículos Existentes</h3>
+                        <p class="text-stone-600 text-sm">Selecciona un artículo de la lista para editarlo</p>
+                    </div>
+                </div>
+
+                <div class="mb-6 max-w-sm">
+                    <label class="label">Elegir artículo a editar</label>
+                    <select id="articulos-dropdown" class="input-field text-lg" onchange="saltarArticulo()">
+                        <option value="">-- Selecciona un artículo --</option>
+                    </select>
+                </div>
+
+                <div id="articulos-container" class="space-y-8 hidden">
+                    <!-- Se renderiza por JS -->
+                </div>
+
+                <div class="flex gap-3 mt-8">
+                    <button onclick="saveArticulos()" class="btn-save flex-1 py-3 text-lg">💾 Guardar Cambios</button>
+                    <button onclick="resetArticulos()" class="btn-reset flex-1 py-3 text-lg">↺ Restaurar Defaults</button>
+                </div>
             </div>
 
-            <div class="flex gap-3 mt-6 pb-12">
-                <button onclick="saveArticulos()" class="btn-save">💾 Guardar todos los cambios</button>
-                <button onclick="resetArticulos()" class="btn-reset">↺ Restaurar defaults</button>
-            </div>
         </div>
 
         <!-- ======================== TAB: FRASES ======================== -->
@@ -372,6 +474,7 @@
             <div id="resenas-aprobadas"></div>
         </div>
     </div>
+
 
     <script src="data.js"></script>
     <script src="admin.js"></script>

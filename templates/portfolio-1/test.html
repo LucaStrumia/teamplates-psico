@@ -232,7 +232,6 @@
         // Estructura de un artículo
         const art = db.articulos[0];
         assert('Artículo tiene id',              typeof art.id === 'number');
-        assert('Artículo tiene emoji',            typeof art.emoji === 'string');
         assert('Artículo tiene titulo',           typeof art.titulo === 'string' && art.titulo.length > 0);
         assert('Artículo tiene descripcion',      typeof art.descripcion === 'string');
         assert('Artículo tiene fecha',            typeof art.fecha === 'string');

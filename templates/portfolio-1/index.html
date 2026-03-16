@@ -252,6 +252,142 @@
         </div>
     </section>
 
+    <!-- BLOG / REFLEXIONES -->
+    <section id="blog" class="relative bg-gradient-to-br from-amber-50 via-stone-100/40 to-amber-100/50 py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-10 right-20 w-32 h-32 bg-amber-300/25 rounded-full blur-2xl"></div>
+            <div class="absolute bottom-20 left-10 w-24 h-24 bg-stone-400/20 rotate-45 blur-xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4">
+            <!-- HEADER -->
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-3 bg-white/70 backdrop-blur text-amber-900 px-6 py-3 rounded-2xl text-sm font-semibold border border-amber-300/50 shadow-sm mb-6">
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                    Reflexiones & Artículos
+                    <div class="w-2.5 h-2.5 bg-amber-700 rounded-full"></div>
+                </div>
+                <h2 class="text-5xl md:text-6xl font-thin text-stone-900 mb-4">
+                    Pensamientos que<br>
+                    <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">inspiran</span>
+                </h2>
+                <p class="text-stone-600 max-w-2xl mx-auto leading-relaxed" data-psico="blog_subtitulo">
+                    Explorando la psicología moderna, el bienestar emocional y el crecimiento personal a través de reflexiones profundas.
+                </p>
+            </div>
+
+            <!-- GRID ARTÍCULOS (renderizado dinámicamente por site-loader.js) -->
+            <div class="grid lg:grid-cols-2 gap-8" id="articulos-grid">
+                <!-- Los artículos se renderizan desde localStorage/data.js -->
+            </div>
+
+            <!-- VER TODOS -->
+            <div class="text-center mt-12">
+                <a href="blog.html" class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-700 to-stone-700 text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg hover:scale-105 transition-all">
+                    Ver todos los artículos →
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ========== RESEÑAS ========== -->
+    <section class="relative bg-gradient-to-br from-stone-50 via-amber-50/40 to-stone-50 py-20 md:py-32 overflow-hidden">
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute -top-20 right-0 w-96 h-96 bg-amber-200/15 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 left-0 w-80 h-80 bg-stone-300/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-6xl mx-auto px-4">
+            <!-- CARRUSEL DE RESEÑAS (Oculto hasta que haya reseñas aprobadas) -->
+            <div id="resenas-carousel-section" class="hidden mb-16">
+                <!-- HEADER -->
+                <div class="text-center mb-16">
+                    <div class="inline-flex items-center gap-3 bg-white/70 backdrop-blur text-amber-900 px-6 py-3 rounded-2xl text-sm font-semibold border border-amber-300/50 shadow-sm mb-6">
+                        <span>⭐</span>
+                        Lo que dicen de mí
+                    </div>
+                    <h2 class="text-5xl md:text-6xl font-thin text-stone-900 mb-4">
+                        <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">Testimonios</span>
+                    </h2>
+                    <p class="text-stone-500 max-w-xl mx-auto text-sm leading-relaxed">
+                        Las experiencias de mis pacientes son lo más importante para mí
+                    </p>
+                </div>
+
+                <!-- Carrusel -->
+                <div class="relative bg-white rounded-3xl shadow-xl p-8 md:p-10">
+                    <div id="resenas-carousel" class="min-h-64 flex flex-col justify-center">
+                        <div id="resenas-container" class="space-y-6">
+                            <!-- Se renderiza por JS -->
+                        </div>
+                    </div>
+
+                    <!-- Navegación -->
+                    <div class="flex items-center justify-center gap-4 mt-8">
+                        <button onclick="resenaAnterior()" class="p-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 transition">←</button>
+                        <div class="flex gap-2" id="resenas-dots">
+                            <!-- Se renderiza por JS -->
+                        </div>
+                        <button onclick="resenaSiguiente()" class="p-2 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 transition">→</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FORMULARIO PARA ESCRIBIR RESEÑA (Siempre visible) -->
+            <div class="max-w-2xl mx-auto">
+                <!-- HEADER del formulario -->
+                <div id="resena-header" class="text-center mb-12 hidden">
+                    <h2 class="text-4xl md:text-5xl font-thin text-stone-900 mb-3">
+                        <span class="font-light bg-gradient-to-r from-amber-800 to-stone-700 bg-clip-text text-transparent">¿Querés dejar tu reseña?</span>
+                    </h2>
+                    <p class="text-stone-500 max-w-xl mx-auto text-sm leading-relaxed">
+                        Compartí tu experiencia conmigo. Tu opinión anónima me ayuda a mejorar
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-10 border border-stone-200/50">
+                    <div id="resena-form-header">
+                        <h3 class="text-2xl font-semibold text-stone-900 mb-2">¿Querés dejar tu reseña?</h3>
+                        <p class="text-stone-500 text-sm mb-8">Compartí tu experiencia conmigo. Tu opinión anónima me ayuda a mejorar</p>
+                    </div>
+
+                    <form id="resena-form" class="space-y-6" novalidate>
+                        <!-- Apodo (opcional) -->
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Apodo o nombre (opcional)</label>
+                            <input type="text" id="resena-apodo" placeholder="Ej: María"
+                                   class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all">
+                        </div>
+
+                        <!-- Texto -->
+                        <div>
+                            <label class="block text-xs font-semibold text-stone-500 uppercase tracking-wide mb-1.5">Tu reseña *</label>
+                            <textarea id="resena-texto" required placeholder="Contame cómo fue tu experiencia conmigo..." rows="4"
+                                      class="w-full px-4 py-3 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-amber-600 focus:ring-2 focus:ring-amber-600/10 transition-all resize-none"></textarea>
+                        </div>
+
+                        <div id="resena-error" class="hidden bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-xl"></div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-stone-700 to-amber-800 text-white px-6 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-amber-700/20 transition-all duration-300 transform hover:-translate-y-0.5">
+                            Enviar reseña →
+                        </button>
+                    </form>
+
+                    <!-- Confirmación -->
+                    <div id="resena-success" class="hidden text-center py-8 space-y-4">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto text-3xl">✓</div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-stone-900 mb-1">¡Gracias por tu reseña!</h3>
+                            <p class="text-stone-500 text-sm">Tu reseña fue enviada al admin para ser revisada. Aparecerá en el sitio una vez aprobada.</p>
+                        </div>
+                        <button onclick="resetResenaForm()" class="text-amber-800 underline text-sm hover:text-stone-700 transition-colors">Escribir otra reseña</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- AGENDAR SESIÓN -->
     <section id="contacto" class="relative bg-gradient-to-br from-stone-100 via-amber-50/60 to-stone-100 py-20 md:py-32 overflow-hidden">
         <div class="absolute inset-0 pointer-events-none">
@@ -415,9 +551,6 @@
                 <p class="text-stone-400 text-sm text-center">
                     © 2024 Candela Gonzalez - Psicóloga. Todos los derechos reservados.
                 </p>
-                <p class="text-stone-500 text-sm">
-                    Desarrollado con ❤️ por Teamplates Psico
-                </p>
             </div>
         </div>
     </footer>
@@ -441,6 +574,147 @@
                 el.style.width = scrolled + '%';
             }
         });
+
+        // =============================================
+        // CARRUSEL DE RESEÑAS
+        // =============================================
+        let resenasIndex = 0;
+        let resenasAprobadas = [];
+
+        function renderCarrusel() {
+            resenasAprobadas = (typeof getResenas !== 'undefined' ? getResenas() : []).filter(r => r.aprobada);
+            const carouselSection = document.getElementById('resenas-carousel-section');
+            
+            if (resenasAprobadas.length === 0) {
+                // Ocultar el carrusel si no hay reseñas aprobadas
+                if (carouselSection) carouselSection.classList.add('hidden');
+                return;
+            }
+            
+            // Mostrar el carrusel cuando hay reseñas aprobadas
+            if (carouselSection) carouselSection.classList.remove('hidden');
+
+            resenasIndex = Math.min(resenasIndex, resenasAprobadas.length - 1);
+            const actual = resenasAprobadas[resenasIndex];
+            
+            // Renderizar la reseña actual
+            document.getElementById('resenas-container').innerHTML = `
+                <div class="opacity-0 animate-fade-in">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-2xl text-yellow-400">${'★'.repeat(actual.estrellas)}${'☆'.repeat(5 - actual.estrellas)}</span>
+                        <div>
+                            <p class="font-semibold text-stone-900">${actual.apodo || 'Anónimo'}</p>
+                            <p class="text-xs text-stone-400">${actual.fecha}</p>
+                        </div>
+                    </div>
+                    <p class="text-stone-700 leading-relaxed italic text-lg">"${actual.texto}"</p>
+                </div>
+            `;
+
+            // Renderizar dots
+            const dotsContainer = document.getElementById('resenas-dots');
+            dotsContainer.innerHTML = resenasAprobadas.map((_, i) => `
+                <button onclick="irAResena(${i})" class="w-2.5 h-2.5 rounded-full transition-all ${i === resenasIndex ? 'bg-amber-700 w-8' : 'bg-stone-300 hover:bg-stone-400'}"></button>
+            `).join('');
+        }
+
+        function resenaSiguiente() {
+            resenasIndex = (resenasIndex + 1) % resenasAprobadas.length;
+            renderCarrusel();
+        }
+
+        function resenaAnterior() {
+            resenasIndex = (resenasIndex - 1 + resenasAprobadas.length) % resenasAprobadas.length;
+            renderCarrusel();
+        }
+
+        function irAResena(i) {
+            resenasIndex = i;
+            renderCarrusel();
+        }
+
+        // =============================================
+        // FORMULARIO DE RESEÑA
+        // =============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            // Form submit
+            const form = document.getElementById('resena-form');
+            if (form) {
+                form.addEventListener('submit', enviarResena);
+            }
+
+            // Renderizar carrusel inicial
+            renderCarrusel();
+        });
+
+        function enviarResena(e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('resena-error');
+            errorDiv.classList.add('hidden');
+
+            const texto = document.getElementById('resena-texto').value.trim();
+            const apodo = document.getElementById('resena-apodo').value.trim();
+
+            if (!texto) {
+                errorDiv.textContent = 'Por favor escribí tu reseña';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Llamar función de data.js para guardar
+            if (agregarResena) {
+                agregarResena({
+                    texto: texto,
+                    apodo: apodo || 'Anónimo',
+                    estrellas: 5
+                });
+
+                // Enviar notificación por email
+                enviarNotificacionResena(apodo || 'Anónimo', texto);
+
+                // Mostrar confirmación
+                document.getElementById('resena-form').classList.add('hidden');
+                document.getElementById('resena-success').classList.remove('hidden');
+                
+                // Refrescar carrusel para actualizar visibilidad si es necesario
+                renderCarrusel();
+            }
+        }
+
+        function enviarNotificacionResena(apodo, texto) {
+            // URL del backend - Detección automática: localhost (dev) o producción
+            const backendURL = window.location.hostname === 'localhost' 
+                ? 'http://localhost:3000'
+                : 'https://tu-backend-produccion.com'; // ← REEMPLAZA CON TU URL DE BACKEND
+            
+            fetch(`${backendURL}/api/notify/resena`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    apodo: apodo,
+                    texto: texto
+                })
+            }).then(res => res.json())
+              .then(data => console.log('✓ Notificación enviada', data))
+              .catch(err => console.log('Notificación en cola (sin internet)'));
+        }
+
+        function resetResenaForm() {
+            document.getElementById('resena-form').reset();
+            document.getElementById('resena-form').classList.remove('hidden');
+            document.getElementById('resena-success').classList.add('hidden');
+        }
+
+        // CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fade-in {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in { animation: fade-in 0.5s ease-out; }
+        `;
+        document.head.appendChild(style);
     </script>
     <script src="data.js"></script>
     <script src="booking.js"></script>
