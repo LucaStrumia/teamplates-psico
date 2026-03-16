@@ -1,5 +1,13 @@
 # 🎯 SISTEMA DE EMAILS - LISTO PARA USAR
 
+## ⚠️ IMPORTANTE: Si ves "La opción no está disponible"
+
+**Significa que NO tiene 2FA habilitada la cuenta Google.**
+
+Solución: Sigue PRIMERO el paso 1️⃣ debajo (Habilitar 2FA) y luego el paso 2️⃣.
+
+---
+
 ## 📋 Estado Actual
 
 ✅ **COMPLETADO:**
@@ -28,24 +36,46 @@ Con una **contraseña de Google de 16 caracteres** (sigue el proceso debajo).
 
 ## 📱 Cómo Generar la Contraseña de Google
 
-### 1️⃣ Habilita 2FA (si no lo has hecho)
-- Ve a https://myaccount.google.com
-- **Seguridad** → **Verificación en dos pasos**
+### 1️⃣ Habilita 2FA (PASO OBLIGATORIO)
+
+Si no lo hiciste, aparecerá error: "La opción no está disponible"
+
+**Pasos detallados:**
+
+1. Ve a https://myaccount.google.com
+2. Click izquierda en **Seguridad**
+3. Busca **"Verificación en dos pasos"**
+4. Click en ella
+5. Click en **"Empezar"**
+6. Sigue los pasos (necesita tu teléfono)
+7. **Confirma y cierra**
 
 ### 2️⃣ Genera App Password
-- Ve a https://myaccount.google.com/apppasswords
-- **Correo** → **Windows**
-- Google te genera: `abcd efgh ijkl mnop` (16 caracteres)
+Una vez que 2FA esté activo:
 
-### 3️⃣ Copia SIN ESPACIOS
+1. Ve a https://myaccount.google.com/apppasswords
+2. **Selecciona: "Correo"** (Mail)
+3. **Selecciona: "Windows"**
+4. Click en **"Generar"**
+5. Google te genera: `abcd efgh ijkl mnop` (16 caracteres)
+
+### 3️⃣ Copia la contraseña (SIN ESPACIOS)
+
+Aparecerá algo como: `abcd efgh ijkl mnop`
+
+**Copia solamente los caracteres (sin espacios):**
 ```
 abcdefghijklmnop
 ```
 
 ### 4️⃣ Pega en backend/.env
+
+Abre `backend/.env` y reemplaza:
 ```env
 SMTP_PASS=abcdefghijklmnop
 ```
+
+Guarda el archivo. **¡LISTO!**
 
 ---
 
