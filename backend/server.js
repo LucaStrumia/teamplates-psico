@@ -305,6 +305,7 @@ app.post('/api/notify/cita', async (req, res) => {
             message: emailSent.success ? '✓ Cita registrada - Email enviado' : '✓ Cita registrada (email notificado)',
             file: filepath ? path.basename(filepath) : 'N/A',
             emailSent: emailSent.success,
+            emailError: emailSent.success ? null : (emailSent.error || emailSent.reason || 'unknown'),
             data: { nombre, email, disponibilidad, modalidad }
         });
     } catch (error) {
