@@ -393,9 +393,9 @@ app.use((err, req, res, next) => {
 });
 
 // Inicializar servidor
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0", () => {
     console.log('\n' + '='.repeat(60));
-    console.log('✓ Servidor corriendo en puerto ' + PORT);
+    console.log(`✓ Servidor escuchando en 0.0.0.0:${PORT}`);
     console.log(`✓ MODO: ${NODE_ENV.toUpperCase()} ${NODE_ENV === 'production' ? '- Emails enviados vía MailerSend' : '- Emails guardados en archivos HTML'}`);
     console.log('✓ Endpoints disponibles:');
     console.log('  - POST /api/notify/cita     (enviar notificación de cita)');
