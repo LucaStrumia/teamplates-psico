@@ -13,6 +13,8 @@ function initBookingForm() {
     // Cargar modalidades en el select
     const selModalidad = document.getElementById('b-modalidad');
     if (selModalidad) {
+        // Limpiar opciones previas para evitar duplicados al reiniciar
+        while (selModalidad.options.length > 1) selModalidad.remove(1);
         agenda.modalidades.forEach(m => {
             const opt = document.createElement('option');
             opt.value = m;
