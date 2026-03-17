@@ -20,7 +20,7 @@ if (!fs.existsSync(logsDir)) {
 
 // Middleware
 app.use(cors({
-    origin: ['https://licgonzalezcandela.github.io', 'http://localhost:5500', 'http://localhost:3000'],
+    origin: ['https://licgonzalezcandela.github.io', 'http://localhost:5500', 'http://localhost:3000', 'http://localhost:8000'],
     credentials: true
 }));
 app.use(express.json());
@@ -33,6 +33,81 @@ app.use((req, res, next) => {
     res.setHeader('X-XSS-Protection', '1; mode=block');
     next();
 });
+
+// Función para enviar email con MailerSend
+async function sendEmailWithMailerSend(to, subject, htmlContent) {
+    try {
+        const apiKey = process.env.MAILERSEND_API_KEY;
+        const senderEmail = process.env.SENDER_EMAIL || 'lswork000@gmail.com';
+        
+        if (!apiKey) {
+            console.warn('⚠️ MAILERSEND_API_KEY no configurada - email no será enviado');
+            return { success: false, reason: 'API key not configured' };
+        }
+
+        console.log(`📤 Intentando enviar email a ${to} desde ${senderEmail}`);
+        console.log(`🔑 API Key configurada (longitud: ${apiKey.length})`);
+
+        const response = await fetch('https://api.mailersend.com/v1/email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                from: {
+                    email: senderEmail,
+                    name: 'Candela González'
+                },
+                to: [
+                    {
+                        email: to,
+                        name: to
+                    }
+                ],
+                subject: subject,
+                html: htmlContent
+            })
+        });
+
+        console.log(`📊 Response status: ${response.status}`);
+        console.log(`📋 Response headers: ${JSON.stringify([...response.headers.entries()])}`);
+
+        if (response.status === 202) {
+            // 202 Accepted - Email fue aceptado por MailerSend
+            const messageId = response.headers.get('x-message-id');
+            console.log(`✓ Email enviado exitosamente a ${to} (Message ID: ${messageId})`);
+            return { success: true, messageId: messageId };
+        } else if (response.ok) {
+            // Otros 2xx - intenta parsear JSON
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const data = await response.json();
+                console.log(`✓ Email enviado a ${to} mediante MailerSend`);
+                return { success: true, messageId: data.message_id };
+            } else {
+                console.log(`✓ Email enviado a ${to} (status ${response.status})`);
+                return { success: true, messageId: null };
+            }
+        } else {
+            // Error
+            try {
+                const errorData = await response.json();
+                console.error(`❌ Error enviando email con MailerSend:`, errorData);
+                return { success: false, error: errorData };
+            } catch (jsonError) {
+                const errorText = await response.text();
+                console.error(`❌ Error enviando email con MailerSend (status ${response.status})`);
+                console.error(`   Response body: ${errorText.substring(0, 500)}`);
+                return { success: false, error: errorText };
+            }
+        }
+    } catch (error) {
+        console.error('❌ Error conectando con MailerSend:', error.message);
+        console.error('❌ Stack trace:', error.stack);
+        return { success: false, error: error.message };
+    }
+}
 
 // Función para guardar email en archivo HTML
 function saveEmailToFile(type, to, subject, htmlContent, data) {
@@ -158,12 +233,16 @@ app.post('/api/notify/cita', async (req, res) => {
             modalidad: modalidad || 'No especificada'
         });
 
+        // Intentar enviar email con MailerSend
+        const emailSent = await sendEmailWithMailerSend(adminEmail, subject, htmlContent);
+
         console.log(`✓ Email de cita guardado: logs/${path.basename(filepath)}`);
 
         res.json({ 
             success: true, 
-            message: '✓ Cita registrada - Email guardado localmente',
+            message: emailSent.success ? '✓ Cita registrada - Email enviado' : '✓ Cita registrada - Email guardado localmente',
             file: path.basename(filepath),
+            emailSent: emailSent.success,
             data: { nombre, email, disponibilidad, modalidad }
         });
     } catch (error) {
@@ -223,12 +302,16 @@ app.post('/api/notify/resena', async (req, res) => {
             texto
         });
 
+        // Intentar enviar email con MailerSend
+        const emailSent = await sendEmailWithMailerSend(adminEmail, subject, htmlContent);
+
         console.log(`✓ Email de reseña guardado: logs/${path.basename(filepath)}`);
 
         res.json({ 
             success: true, 
-            message: '✓ Reseña registrada - Email guardado localmente',
+            message: emailSent.success ? '✓ Reseña registrada - Email enviado' : '✓ Reseña registrada - Email guardado localmente',
             file: path.basename(filepath),
+            emailSent: emailSent.success,
             data: { apodo, texto }
         });
     } catch (error) {
