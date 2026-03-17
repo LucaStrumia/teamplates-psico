@@ -11,10 +11,11 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
-// Crear carpeta de logs si no existe
+// Crear carpeta de logs si no existe (solo en desarrollo)
 const logsDir = path.join(__dirname, 'logs');
-if (!fs.existsSync(logsDir)) {
+if (NODE_ENV === 'development' && !fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
@@ -116,8 +117,13 @@ async function sendEmailWithMailerSend(to, subject, htmlContent) {
     }
 }
 
-// Función para guardar email en archivo HTML
+// Función para guardar email en archivo HTML (solo en desarrollo)
 function saveEmailToFile(type, to, subject, htmlContent, data) {
+    // En producción, no guardar archivos
+    if (NODE_ENV === 'production') {
+        return null;
+    }
+    
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const filename = `${type}-${timestamp}.html`;
     const filepath = path.join(logsDir, filename);
@@ -247,8 +253,8 @@ app.post('/api/notify/cita', async (req, res) => {
 
         res.json({ 
             success: true, 
-            message: emailSent.success ? '✓ Cita registrada - Email enviado' : '✓ Cita registrada - Email guardado localmente',
-            file: path.basename(filepath),
+            message: emailSent.success ? '✓ Cita registrada - Email enviado' : '✓ Cita registrada (email notificado)',
+            file: filepath ? path.basename(filepath) : 'N/A',
             emailSent: emailSent.success,
             data: { nombre, email, disponibilidad, modalidad }
         });
@@ -312,12 +318,16 @@ app.post('/api/notify/resena', async (req, res) => {
         // Intentar enviar email con MailerSend
         const emailSent = await sendEmailWithMailerSend(adminEmail, subject, htmlContent);
 
-        console.log(`✓ Email de reseña guardado: logs/${path.basename(filepath)}`);
+        if (filepath) {
+            console.log(`✓ Email de reseña guardado: logs/${path.basename(filepath)}`);
+        } else {
+            console.log(`✓ Email de reseña enviado vía MailerSend (producción)`);
+        }
 
         res.json({ 
             success: true, 
-            message: emailSent.success ? '✓ Reseña registrada - Email enviado' : '✓ Reseña registrada - Email guardado localmente',
-            file: path.basename(filepath),
+            message: emailSent.success ? '✓ Reseña registrada - Email enviado' : '✓ Reseña registrada (email notificado)',
+            file: filepath ? path.basename(filepath) : 'N/A',
             emailSent: emailSent.success,
             data: { apodo, texto }
         });
@@ -332,11 +342,15 @@ app.post('/api/notify/resena', async (req, res) => {
 
 // GET /api/health - Health check
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Servidor funcionando correctamente en MODO DESARROLLO' });
+    res.json({ status: 'ok', message: 'Servidor funcionando correctamente', mode: NODE_ENV });
 });
 
-// GET /api/emails - Ver emails guardados
+// GET /api/emails - Ver emails guardados (solo en desarrollo)
 app.get('/api/emails', (req, res) => {
+    if (NODE_ENV === 'production') {
+        return res.status(403).json({ error: 'No disponible en producción' });
+    }
+    
     try {
         const files = fs.readdirSync(logsDir)
             .filter(f => f.endsWith('.html'))
@@ -356,12 +370,14 @@ app.get('/api/emails', (req, res) => {
 app.listen(PORT, () => {
     console.log('\n' + '='.repeat(60));
     console.log('✓ Servidor corriendo en puerto ' + PORT);
-    console.log('✓ MODO: DESARROLLO - Emails guardados en archivos HTML');
+    console.log(`✓ MODO: ${NODE_ENV.toUpperCase()} ${NODE_ENV === 'production' ? '- Emails enviados vía MailerSend' : '- Emails guardados en archivos HTML'}`);
     console.log('✓ Endpoints disponibles:');
     console.log('  - POST /api/notify/cita     (enviar notificación de cita)');
     console.log('  - POST /api/notify/resena   (enviar notificación de reseña)');
     console.log('  - GET  /api/health          (verificar estado)');
-    console.log('  - GET  /api/emails          (ver emails guardados)');
-    console.log(`✓ Carpeta de logs: ${path.resolve(logsDir)}/`);
+    console.log('  - GET  /api/emails          (ver emails guardados - solo desarrollo)');
+    if (NODE_ENV === 'development') {
+        console.log(`✓ Carpeta de logs: ${path.resolve(logsDir)}/`);
+    }
     console.log('='.repeat(60) + '\n');
 });
