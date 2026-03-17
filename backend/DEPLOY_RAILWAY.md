@@ -37,8 +37,8 @@ Una vez que esté en Railway:
    ```
    NODE_ENV=production
    ADMIN_EMAIL=licgonzalezcandela@gmail.com
-   SENDER_EMAIL=lswork000@gmail.com
-   MAILERSEND_API_KEY=mlsn.8c94940d27a7aadc4e590974676400beca5860caf822e3ad3f917e8580bc57d4
+   SENDER_EMAIL=noreply@test-dnvo4d9ko033g5r86.mlsender.net
+   MAILERSEND_API_KEY=<PASTE_YOUR_NEW_KEY_HERE>
    CORS_ORIGIN=https://licgonzalezcandela.github.io
    ```
 
