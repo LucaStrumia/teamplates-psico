@@ -91,7 +91,7 @@ function enviarNotificacionCita(nombre, email, disponibilidad, modalidad) {
     // URL del backend - Detección automática: localhost (dev) o producción
     const backendURL = window.location.hostname === 'localhost' 
         ? 'http://localhost:3000'
-        : 'https://tu-backend-produccion.com'; // ← REEMPLAZA CON TU URL DE BACKEND
+        : 'https://teamplates-psico-production.up.railway.app';
     
     fetch(`${backendURL}/api/notify/cita`, {
         method: 'POST',
