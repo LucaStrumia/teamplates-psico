@@ -1,9 +1,16 @@
 /**
  * BACKEND - Servidor Express para notificaciones
  * Modo desarrollo: guarda emails en archivos HTML
+ * Modo producción: envía emails vía MailerSend
  */
 
-require('dotenv').config();
+// Cargar .env solo en desarrollo (en Railway usa variables de entorno)
+try {
+    require('dotenv').config();
+} catch (err) {
+    console.log('⚠️ No se pudo cargar .env (esperado en producción)');
+}
+
 const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
@@ -12,6 +19,14 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const NODE_ENV = process.env.NODE_ENV || 'development';
+
+// Log de configuración inicial
+console.log('🚀 Iniciando servidor...');
+console.log(`📌 NODE_ENV: ${NODE_ENV}`);
+console.log(`📌 PORT: ${PORT}`);
+console.log(`📌 MAILERSEND_API_KEY: ${process.env.MAILERSEND_API_KEY ? '✓ Configurada' : '❌ NO configurada'}`);
+console.log(`📌 SENDER_EMAIL: ${process.env.SENDER_EMAIL || '❌ NO configurada'}`);
+console.log(`📌 ADMIN_EMAIL: ${process.env.ADMIN_EMAIL || '❌ NO configurada'}`);
 
 // Crear carpeta de logs si no existe (solo en desarrollo)
 const logsDir = path.join(__dirname, 'logs');
@@ -340,9 +355,14 @@ app.post('/api/notify/resena', async (req, res) => {
     }
 });
 
-// GET /api/health - Health check
+// GET /api/health - Health check (simple y rápido)
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Servidor funcionando correctamente', mode: NODE_ENV });
+    try {
+        res.json({ status: 'ok', message: 'Server is running', mode: NODE_ENV });
+    } catch (err) {
+        console.error('Error en health check:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 // GET /api/emails - Ver emails guardados (solo en desarrollo)
@@ -366,8 +386,14 @@ app.get('/api/emails', (req, res) => {
     }
 });
 
+// Manejo de errores global
+app.use((err, req, res, next) => {
+    console.error('❌ Error no capturado:', err);
+    res.status(500).json({ error: 'Internal server error', message: err.message });
+});
+
 // Inicializar servidor
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log('\n' + '='.repeat(60));
     console.log('✓ Servidor corriendo en puerto ' + PORT);
     console.log(`✓ MODO: ${NODE_ENV.toUpperCase()} ${NODE_ENV === 'production' ? '- Emails enviados vía MailerSend' : '- Emails guardados en archivos HTML'}`);
@@ -380,4 +406,14 @@ app.listen(PORT, () => {
         console.log(`✓ Carpeta de logs: ${path.resolve(logsDir)}/`);
     }
     console.log('='.repeat(60) + '\n');
+});
+
+// Manejo de errores de servidor
+server.on('error', (err) => {
+    console.error('❌ Error en el servidor:', err);
+    console.error('   Código de error:', err.code);
+    if (err.code === 'EADDRINUSE') {
+        console.error(`   Puerto ${PORT} ya está en uso`);
+    }
+    process.exit(1);
 });
