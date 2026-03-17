@@ -271,7 +271,7 @@ app.post('/api/notify/cita', async (req, res) => {
                         <p style="color: #666; font-size: 14px;">
                             Accede al dashboard de administración para confirmar o rechazar la cita:
                         </p>
-                        <a href="https://licgonzalezcandela.github.io/templates/portfolio-1/admin.html" 
+                        <a href="https://lucastrumia.github.io/teamplates-psico/templates/portfolio-1/admin.html" 
                            style="display: inline-block; background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px 0;">
                             Ir al Panel de Admin
                         </a>
@@ -347,7 +347,7 @@ app.post('/api/notify/resena', async (req, res) => {
                         <p style="color: #666; font-size: 14px;">
                             Accede al dashboard para aprobar o rechazar esta reseña:
                         </p>
-                        <a href="https://licgonzalezcandela.github.io/templates/portfolio-1/admin.html" 
+                        <a href="https://lucastrumia.github.io/teamplates-psico/templates/portfolio-1/admin.html" 
                            style="display: inline-block; background: #f5576c; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold; margin: 10px 0;">
                             Ir al Panel de Admin
                         </a>
