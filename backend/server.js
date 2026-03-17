@@ -19,8 +19,15 @@ if (!fs.existsSync(logsDir)) {
 }
 
 // Middleware
+const CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',').map(url => url.trim()) || [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'https://lucastrumia.github.io',
+    'https://licgonzalezcandela.github.io'
+];
+
 app.use(cors({
-    origin: ['https://licgonzalezcandela.github.io', 'http://localhost:5500', 'http://localhost:3000', 'http://localhost:8000'],
+    origin: CORS_ORIGIN,
     credentials: true
 }));
 app.use(express.json());
