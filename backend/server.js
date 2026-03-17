@@ -22,16 +22,28 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Log de configuración inicial
 console.log('🚀 Iniciando servidor...');
-console.log(`📌 NODE_ENV: ${NODE_ENV}`);
-console.log(`📌 PORT: ${PORT}`);
+console.log(`📌 NODE_ENV: "${NODE_ENV}"`);
+console.log(`📌 PORT: "${PORT}"`);
 console.log(`📌 MAILERSEND_API_KEY: ${process.env.MAILERSEND_API_KEY ? '✓ Configurada' : '❌ NO configurada'}`);
 console.log(`📌 SENDER_EMAIL: ${process.env.SENDER_EMAIL || '❌ NO configurada'}`);
 console.log(`📌 ADMIN_EMAIL: ${process.env.ADMIN_EMAIL || '❌ NO configurada'}`);
 
 // Crear carpeta de logs si no existe (solo en desarrollo)
+// En producción NO crear archivos locales
 const logsDir = path.join(__dirname, 'logs');
-if (NODE_ENV === 'development' && !fs.existsSync(logsDir)) {
-    fs.mkdirSync(logsDir);
+let canWriteLogs = false;
+
+if (NODE_ENV === 'development') {
+    try {
+        if (!fs.existsSync(logsDir)) {
+            fs.mkdirSync(logsDir, { recursive: true });
+        }
+        canWriteLogs = true;
+        console.log(`✓ Directorio de logs creado/verificado: ${logsDir}`);
+    } catch (err) {
+        console.warn(`⚠️ No se pudo crear directorio de logs: ${err.message}`);
+        canWriteLogs = false;
+    }
 }
 
 // Middleware
@@ -134,13 +146,14 @@ async function sendEmailWithMailerSend(to, subject, htmlContent) {
 
 // Función para guardar email en archivo HTML (solo en desarrollo)
 function saveEmailToFile(type, to, subject, htmlContent, data) {
-    // En producción, no guardar archivos
-    if (NODE_ENV === 'production') {
+    // En producción o si no se puede escribir, no guardar archivos
+    if (NODE_ENV === 'production' || !canWriteLogs) {
         return null;
     }
     
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const filename = `${type}-${timestamp}.html`;
+    try {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const filename = `${type}-${timestamp}.html`;
     const filepath = path.join(logsDir, filename);
     
     const fullHTML = `
@@ -193,8 +206,12 @@ function saveEmailToFile(type, to, subject, htmlContent, data) {
 </html>
     `;
     
-    fs.writeFileSync(filepath, fullHTML);
-    return filepath;
+        fs.writeFileSync(filepath, fullHTML);
+        return filepath;
+    } catch (err) {
+        console.error(`⚠️ Error al guardar archivo de email: ${err.message}`);
+        return null;
+    }
 }
 
 // POST /api/notify/cita - Notificación de nueva cita
