@@ -389,6 +389,11 @@ app.post('/api/notify/resena', async (req, res) => {
     }
 });
 
+// GET / - Root health check (para Railway y navegadores)
+app.get('/', (req, res) => {
+    res.json({ status: 'ok', message: 'Server is running', mode: NODE_ENV });
+});
+
 // GET /api/health - Health check (simple y rápido)
 app.get('/api/health', (req, res) => {
     try {
