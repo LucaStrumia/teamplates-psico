@@ -4,6 +4,19 @@
  * Modo producción: envía emails vía MailerSend
  */
 
+// Manejo de errores no capturados ANTES de cualquier otro código
+process.on('uncaughtException', (err) => {
+    console.error('❌ UNCAUGHT EXCEPTION:', err);
+    console.error(err.stack);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('❌ UNHANDLED REJECTION at:', promise);
+    console.error('❌ Reason:', reason);
+    process.exit(1);
+});
+
 // Cargar .env solo en desarrollo (en Railway usa variables de entorno)
 try {
     require('dotenv').config();
@@ -434,3 +447,16 @@ server.on('error', (err) => {
     }
     process.exit(1);
 });
+
+// Listener para cierre inesperado
+server.on('close', () => {
+    console.error('❌ El servidor se ha cerrado inesperadamente');
+    process.exit(1);
+});
+
+// Gracias explícitamente para mantener el proceso activo
+setInterval(() => {
+    // Este interval mantiene el proceso activo indefinidamente
+}, 60000);
+
+console.log('✅ Sistema de mantenimiento activo');
