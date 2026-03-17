@@ -294,7 +294,11 @@ app.post('/api/notify/cita', async (req, res) => {
         // Intentar enviar email con MailerSend
         const emailSent = await sendEmailWithMailerSend(adminEmail, subject, htmlContent);
 
-        console.log(`✓ Email de cita guardado: logs/${path.basename(filepath)}`);
+        if (filepath) {
+            console.log(`✓ Email de cita guardado: logs/${path.basename(filepath)}`);
+        } else {
+            console.log(`✓ Email de cita enviado vía MailerSend (modo producción)`);
+        }
 
         res.json({ 
             success: true, 
@@ -366,7 +370,7 @@ app.post('/api/notify/resena', async (req, res) => {
         if (filepath) {
             console.log(`✓ Email de reseña guardado: logs/${path.basename(filepath)}`);
         } else {
-            console.log(`✓ Email de reseña enviado vía MailerSend (producción)`);
+            console.log(`✓ Email de reseña enviado vía MailerSend (modo producción)`);
         }
 
         res.json({ 
